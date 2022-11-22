@@ -1,18 +1,30 @@
 # ClassIn-Mover ![GitHub all releases](https://img.shields.io/github/downloads/CarlGao4/Classin-mover/total)
 
+*This the latest develop branch preparing to release*
+
 A program to move `ClassIn` classroom window in order to exit from focused learning mode.
 
 Supported `ClassIn` version: `3.0.2.130` to `3.0.5.1`, as well as `3.0.7.x` `4.x`. (`ClassIn` prior to `3.0.2.130` does not have focused learning mode at all)
 
 Maybe the program will lose efficacy in the future versions.
 
-## Usage
+## Components
+
+### Classic
+
+The program remained the old style of v1.0.0, except the modern UI by Tk. 
+
+#### Usage
 
 Run this program before entering the classroom, then get into the classroom as normal.
 
 After that, the program will automatically detect the classroom window, and make it unable to occupy the whole screen.
 
 If working well, the program should output one line of log each second, showing the current working status.
+
+### Enhanced
+
+Features are still under development.
 
 ## Known issues
 
