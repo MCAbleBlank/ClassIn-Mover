@@ -158,6 +158,38 @@ def MouseUpI(event):
         SwitchController()
 
 
+def MouseDownM(event):
+    global mx, my
+    mx = event.x_root
+    my = event.y_root
+
+
+def MouseMoveM(event):
+    MoveWindow(x=event.x_root - mx, y=event.y_root - my, relative=True)
+    ctypes.windll.user32.SetCursorPos(mx, my)
+
+
+def MouseMoveR(event):
+    MoveWindow(cx=event.x_root - mx, cy=event.y_root - my, relative=True)
+    ctypes.windll.user32.SetCursorPos(mx, my)
+
+
+def Center():
+    if not (hwnd := GetWindow()):
+        return
+    rect = struct.pack("llll", *([0] * 4))
+    ctypes.windll.user32.GetWindowRect(hwnd, rect)
+    rect = struct.unpack("llll", rect)
+    ctypes.windll.user32.MoveWindow(
+        hwnd,
+        (w.winfo_screenwidth() - rect[2] + rect[0]) // 2,
+        (w.winfo_screenheight() - rect[3] + rect[1]) // 2,
+        rect[2] - rect[0],
+        rect[3] - rect[1],
+        1,
+    )
+
+
 def SwitchController():
     global root_shown
     if root_shown:
@@ -175,40 +207,69 @@ def GetWindow():
     return int(s.split(" ", 2)[0])
 
 
-def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None):
+def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None, relative=False):
     if hwnd is None:
         hwnd = GetWindow()
     if not hwnd:
         return
     if sw is not None:
         ctypes.windll.user32.ShowWindow(hwnd, sw)
-    if InsertAfter is not None:
-        rect = struct.pack("llll", *([0] * 4))
-        ctypes.windll.user32.GetWindowRect(hwnd, rect)
-        rect = struct.unpack("llll", rect)
-        ctypes.windll.user32.SetWindowPos(
-            hwnd,
-            ctypes.wintypes.HWND(InsertAfter),
-            rect[0] if x is None else x,
-            rect[1] if y is None else y,
-            rect[2] - rect[0] if cx is None else cx,
-            rect[3] - rect[1] if cy is None else cy,
-            (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
-        )
-        I.attributes("-topmost", 1)
-        w.attributes("-topmost", 1)
+    if not relative:
+        if InsertAfter is not None:
+            rect = struct.pack("llll", *([0] * 4))
+            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            rect = struct.unpack("llll", rect)
+            ctypes.windll.user32.SetWindowPos(
+                hwnd,
+                ctypes.wintypes.HWND(InsertAfter),
+                rect[0] if x is None else x,
+                rect[1] if y is None else y,
+                rect[2] - rect[0] if cx is None else cx,
+                rect[3] - rect[1] if cy is None else cy,
+                (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
+            )
+            I.attributes("-topmost", 1)
+            w.attributes("-topmost", 1)
+        else:
+            rect = struct.pack("llll", *([0] * 4))
+            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            rect = struct.unpack("llll", rect)
+            ctypes.windll.user32.MoveWindow(
+                hwnd,
+                rect[0] if x is None else x,
+                rect[1] if y is None else y,
+                rect[2] - rect[0] if cx is None else cx,
+                rect[3] - rect[1] if cy is None else cy,
+                1,
+            )
     else:
-        rect = struct.pack("llll", *([0] * 4))
-        ctypes.windll.user32.GetWindowRect(hwnd, rect)
-        rect = struct.unpack("llll", rect)
-        ctypes.windll.user32.MoveWindow(
-            hwnd,
-            rect[0] if x is None else x,
-            rect[1] if y is None else y,
-            rect[2] - rect[0] if cx is None else cx,
-            rect[3] - rect[1] if cy is None else cy,
-            1,
-        )
+        if InsertAfter is not None:
+            rect = struct.pack("llll", *([0] * 4))
+            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            rect = struct.unpack("llll", rect)
+            ctypes.windll.user32.SetWindowPos(
+                hwnd,
+                ctypes.wintypes.HWND(InsertAfter),
+                rect[0] + (0 if x is None else x),
+                rect[1] + (0 if y is None else y),
+                rect[2] - rect[0] + (0 if cx is None else cx),
+                rect[3] - rect[1] + (0 if cy is None else cy),
+                (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
+            )
+            I.attributes("-topmost", 1)
+            w.attributes("-topmost", 1)
+        else:
+            rect = struct.pack("llll", *([0] * 4))
+            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            rect = struct.unpack("llll", rect)
+            ctypes.windll.user32.MoveWindow(
+                hwnd,
+                rect[0] + (0 if x is None else x),
+                rect[1] + (0 if y is None else y),
+                rect[2] - rect[0] + (0 if cx is None else cx),
+                rect[3] - rect[1] + (0 if cy is None else cy),
+                1,
+            )
 
 
 def AutoPatch(hwnd=None):
@@ -248,6 +309,24 @@ if __name__ == "__main__":
         command=lambda: (ctypes.windll.user32.SetForegroundWindow(GetWindow()) if GetWindow() else None),
     )
     AutoB = tkinter.ttk.Button(w, text="Auto Patch", command=AutoPatch)
+    DragF = tkinter.LabelFrame(
+        w,
+        width=192,
+        height=108,
+        bd=0,
+        bg="#cccccc",
+        labelanchor="n",
+        text="Drag to move ClassIn window\nDouble click: move to center",
+    )
+    MoveF = tkinter.LabelFrame(
+        w,
+        width=192,
+        height=108,
+        bd=0,
+        bg="#cccccc",
+        labelanchor="n",
+        text="Drag to resize ClassIn window\nDouble click: screen size",
+    )
     AboutB = tkinter.ttk.Button(
         w,
         text="About...",
@@ -270,9 +349,17 @@ if __name__ == "__main__":
     NoTopB.grid(row=2, column=1, padx=(5, 5), pady=(5, 5))
     SwitchB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
     AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
+    DragF.grid(row=3, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
+    MoveF.grid(row=3, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
     AboutB.grid(row=4, column=2, padx=(5, 5), pady=(5, 20))
     ExitB.grid(row=4, column=3, padx=(5, 20), pady=(5, 20))
 
+    DragF.bind("<ButtonPress-1>", MouseDownM)
+    DragF.bind("<B1-Motion>", MouseMoveM)
+    DragF.bind("<Double-Button-1>", lambda _: Center())
+    MoveF.bind("<ButtonPress-1>", MouseDownM)
+    MoveF.bind("<B1-Motion>", MouseMoveR)
+    MoveF.bind("<Double-Button-1>", lambda _: MoveWindow(cx=w.winfo_screenwidth(), cy=w.winfo_screenheight()))
     I = tkinter.Toplevel()
     I.overrideredirect(True)
     I.geometry("48x48+96+96")
