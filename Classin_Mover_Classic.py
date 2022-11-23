@@ -93,6 +93,8 @@ def EnumWindowCallback(hwnd, lParam):
 def GetClassInHwnd():
     global ClassInHwnd, ClassInPID, ClassInTitle
     ClassInHwnd = []
+    ClassInTitle = []
+    ClassInPID = []
     ctypes.windll.user32.EnumWindows(EnumWindowCallback, 0)
     return list(zip(ClassInPID, ClassInHwnd, ClassInTitle))
 
