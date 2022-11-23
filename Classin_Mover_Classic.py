@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__version__ = "2.0.0"
+__version__ = "2.0.0c"
 
 import tkinter
 import tkinter.ttk
@@ -62,7 +62,7 @@ if __name__ == "__main__" and not has_admin()[1]:
         raise SystemExit
     NoAdmin = True
 
-
+@ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def EnumWindowCallback(hwnd, lParam):
     global ClassInHwnd, ClassInPID, ClassInTitle
     textlen = ctypes.windll.user32.GetWindowTextLengthW(hwnd)
@@ -88,14 +88,10 @@ def EnumWindowCallback(hwnd, lParam):
     return 1
 
 
-pFunc = ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
-pFuncEnum = pFunc(EnumWindowCallback)
-
-
 def GetClassInHwnd():
     global ClassInHwnd, ClassInPID, ClassInTitle
     ClassInHwnd = []
-    ctypes.windll.user32.EnumWindows(pFuncEnum, 0)
+    ctypes.windll.user32.EnumWindows(EnumWindowCallback, 0)
     return list(zip(ClassInPID, ClassInHwnd, ClassInTitle))
 
 
