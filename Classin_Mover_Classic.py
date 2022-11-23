@@ -27,11 +27,40 @@ import datetime
 import math
 import threading
 import sys
+import os
+import shlex
+import psutil
 
 ClassInHwnd = []
 ClassInTitle = []
 ClassInPID = []
 run = True
+NoAdmin = False
+
+
+def has_admin():
+    try:
+        # only windows users with admin privileges can read the C:\windows\temp
+        os.listdir(os.sep.join([os.environ.get("SystemRoot", "C:\\windows"), "temp"]))
+    except:
+        return os.environ["USERNAME"], False
+    else:
+        return os.environ["USERNAME"], True
+
+
+if __name__ == "__main__" and not has_admin()[1]:
+    p = psutil.Process().cmdline()
+    res = ctypes.windll.shell32.ShellExecuteW(
+        0,
+        ctypes.create_unicode_buffer("runas"),
+        ctypes.create_unicode_buffer(p[0]),
+        ctypes.create_unicode_buffer(shlex.join(p[1:])),
+        0,
+        5,
+    )
+    if res > 32:
+        raise SystemExit
+    NoAdmin = True
 
 
 def EnumWindowCallback(hwnd, lParam):
@@ -128,31 +157,40 @@ def PatchWindow():
         return
 
 
-w = tkinter.Tk()
-LogText = tkinter.Text(w, width=100, height=30, font=("Courier", 12), state=tkinter.DISABLED)
-LogText.pack(fill=tkinter.Y, side=tkinter.LEFT)
-LogScr = tkinter.ttk.Scrollbar(w, orient=tkinter.VERTICAL, command=LogText.yview)
-LogText.config(yscrollcommand=LogScr.set)
-LogScr.pack(fill=tkinter.Y, side=tkinter.RIGHT)
-w.resizable(False, False)
-w.title("ClassIn Mover Classic v2.0.0")
+def Exit():
+    global run
+    run = False
+    w.destroy()
 
 
-def AddText(text):
-    LogText.config(state=tkinter.NORMAL)
-    End = LogScr.get()[1] == 1
-    LogText.insert(tkinter.END, text)
-    if End:
-        LogText.see(tkinter.END)
-    LogText.config(state=tkinter.DISABLED)
+if __name__ == "__main__":
+    w = tkinter.Tk()
+    LogText = tkinter.Text(w, width=100, height=30, font=("Courier", 12), state=tkinter.DISABLED)
+    LogText.pack(fill=tkinter.Y, side=tkinter.LEFT)
+    LogScr = tkinter.ttk.Scrollbar(w, orient=tkinter.VERTICAL, command=LogText.yview)
+    LogText.config(yscrollcommand=LogScr.set)
+    LogScr.pack(fill=tkinter.Y, side=tkinter.RIGHT)
+    w.resizable(False, False)
+    w.title("ClassIn Mover Classic v2.0.0")
 
+    def AddText(text):
+        LogText.config(state=tkinter.NORMAL)
+        End = LogScr.get()[1] == 1
+        LogText.insert(tkinter.END, text)
+        if End:
+            LogText.see(tkinter.END)
+        LogText.config(state=tkinter.DISABLED)
 
-AddText("ClassIn Mover Classic v2.0.0\n")
-AddText("Copyright (C) 2020-2022  Weiqi Gao, Jize Guo\n")
-AddText("Visit https://github.com/CarlGao4/ClassIn-Mover for more information.\n\n")
+    AddText("ClassIn Mover Classic v2.0.0\n")
+    AddText("Copyright (C) 2020-2022  Weiqi Gao, Jize Guo\n")
+    AddText("Visit https://github.com/CarlGao4/ClassIn-Mover for more information.\n\n")
 
-w.protocol("WM_DELETE_WINDOW", sys.exit)
-PatchThread = threading.Thread(target=PatchWindow)
-PatchThread.start()
+    if NoAdmin:
+        AddText("You are running this program without Administrator privilege, the program maybe can't function\n\n")
 
-w.mainloop()
+    w.protocol("WM_DELETE_WINDOW", Exit)
+    PatchThread = threading.Thread(target=PatchWindow)
+    PatchThread.start()
+
+    w.mainloop()
+    sys.exit(0)
