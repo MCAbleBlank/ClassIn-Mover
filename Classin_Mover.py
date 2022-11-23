@@ -1,5 +1,5 @@
-LICENSE = """ClassIn Mover - A program to move ClassIn classroom window in order to
-exit from focused learning mode.
+LICENSE = """ClassIn Mover - A program to move ClassIn classroom window in order to exit from focused learning mode.
+Visit https://github.com/CarlGao4/ClassIn-Mover for more information. 
 
 Copyright (C) 2020-2022  Weiqi Gao, Jize Guo
 
@@ -19,6 +19,7 @@ __version__ = "2.0.0"
 
 import tkinter
 import tkinter.ttk
+import tkinter.messagebox
 import ctypes
 import ctypes.wintypes
 import struct
@@ -32,7 +33,6 @@ import psutil
 import PIL
 import PIL.Image
 import PIL.ImageTk
-import subprocess
 import pathlib
 import pickle
 import zlib
@@ -108,7 +108,7 @@ def GetClassInHwnd():
 
 def ScanWindow():
     global run
-    last = ""
+    last = set()
     count = 0
     while run:
         try:
@@ -122,10 +122,12 @@ def ScanWindow():
             CIHwnd = GetClassInHwnd()
             if len(CIHwnd) != 0:
                 newvalues = []
-                newset = " ".join(sorted(str(i[1]) for i in CIHwnd))
+                newset = set(i[1] for i in CIHwnd)
                 if newset != last:
                     for i in CIHwnd:
                         newvalues.append("%d (Title=%s PID=%d)" % (i[1], i[2], i[0]))
+                        if (i[1] not in last) and DoAutoPatch.get():
+                            w.after(1000, lambda: AutoPatch(hwnd=i[1]))
                     WindowSelector.config(values=newvalues)
                     last = newset
                     if not WindowSelector.get() in newvalues:
@@ -152,14 +154,18 @@ def MouseMoveI(event):
 
 
 def MouseUpI(event):
-    global root_shown
     if imxr == event.x_root and imyr == event.y_root:
-        if root_shown:
-            w.withdraw()
-            root_shown = False
-        else:
-            w.deiconify()
-            root_shown = True
+        SwitchController()
+
+
+def SwitchController():
+    global root_shown
+    if root_shown:
+        w.withdraw()
+        root_shown = False
+    else:
+        w.deiconify()
+        root_shown = True
 
 
 def GetWindow():
@@ -169,16 +175,19 @@ def GetWindow():
     return int(s.split(" ", 2)[0])
 
 
-def MoveWindow(sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None):
-    CIW = GetWindow()
+def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None):
+    if hwnd is None:
+        hwnd = GetWindow()
+    if not hwnd:
+        return
     if sw is not None:
-        ctypes.windll.user32.ShowWindow(CIW, sw)
+        ctypes.windll.user32.ShowWindow(hwnd, sw)
     if InsertAfter is not None:
         rect = struct.pack("llll", *([0] * 4))
-        ctypes.windll.user32.GetWindowRect(CIW, rect)
+        ctypes.windll.user32.GetWindowRect(hwnd, rect)
         rect = struct.unpack("llll", rect)
         ctypes.windll.user32.SetWindowPos(
-            CIW,
+            hwnd,
             ctypes.wintypes.HWND(InsertAfter),
             rect[0] if x is None else x,
             rect[1] if y is None else y,
@@ -190,10 +199,10 @@ def MoveWindow(sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None):
         w.attributes("-topmost", 1)
     else:
         rect = struct.pack("llll", *([0] * 4))
-        ctypes.windll.user32.GetWindowRect(CIW, rect)
+        ctypes.windll.user32.GetWindowRect(hwnd, rect)
         rect = struct.unpack("llll", rect)
         ctypes.windll.user32.MoveWindow(
-            CIW,
+            hwnd,
             rect[0] if x is None else x,
             rect[1] if y is None else y,
             rect[2] - rect[0] if cx is None else cx,
@@ -202,18 +211,20 @@ def MoveWindow(sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None):
         )
 
 
-def AutoPatch():
-    MoveWindow(sw=6, InsertAfter=-2)
-    time.sleep(0.1)
-    MoveWindow(sw=3)
+def AutoPatch(hwnd=None):
+    if hwnd is None:
+        hwnd = GetWindow()
+    MoveWindow(hwnd=hwnd, sw=6, InsertAfter=-2)
+    w.after(100, lambda: MoveWindow(hwnd=hwnd, sw=3))
 
 
 if __name__ == "__main__":
     w = tkinter.Tk()
     w.resizable(False, False)
-    w.title("ClassIn Mover v2.0.0")
+    w.title("ClassIn Mover v2.0.0" + (" - without Admin" if NoAdmin else ""))
     w.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
     w.attributes("-topmost", 1)
+    w.protocol("WM_DELETE_WINDOW", SwitchController)
     root_shown = False
 
     style = ctypes.windll.user32.GetWindowLongW(int(w.frame(), 16), -16)
@@ -232,9 +243,23 @@ if __name__ == "__main__":
     TopB = tkinter.ttk.Button(w, text="Topmost", command=lambda: MoveWindow(InsertAfter=-1))
     NoTopB = tkinter.ttk.Button(w, text="No Topmost", command=lambda: MoveWindow(InsertAfter=-2))
     SwitchB = tkinter.ttk.Button(
-        w, text="Switch To", command=lambda: ctypes.windll.user32.SetForegroundWindow(GetWindow())
+        w,
+        text="Switch To",
+        command=lambda: (ctypes.windll.user32.SetForegroundWindow(GetWindow()) if GetWindow() else None),
     )
     AutoB = tkinter.ttk.Button(w, text="Auto Patch", command=AutoPatch)
+    AboutB = tkinter.ttk.Button(
+        w,
+        text="About...",
+        command=lambda: [
+            SwitchController(),
+            I.withdraw(),
+            tkinter.messagebox.showinfo("About ClassIn Mover " + __version__, LICENSE),
+            SwitchController(),
+            I.deiconify(),
+        ],
+    )
+    ExitB = tkinter.ttk.Button(w, text="Exit", command=w.destroy)
 
     WindowSelector.grid(row=0, column=0, columnspan=4, padx=(20, 20), pady=(20, 5))
     MinimizeB.grid(row=1, column=0, padx=(20, 5), pady=(5, 5))
@@ -245,12 +270,16 @@ if __name__ == "__main__":
     NoTopB.grid(row=2, column=1, padx=(5, 5), pady=(5, 5))
     SwitchB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
     AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
+    AboutB.grid(row=4, column=2, padx=(5, 5), pady=(5, 20))
+    ExitB.grid(row=4, column=3, padx=(5, 20), pady=(5, 20))
 
     I = tkinter.Toplevel()
     I.overrideredirect(True)
     I.geometry("48x48+96+96")
     I.resizable(False, False)
+    DoAutoPatch = tkinter.BooleanVar(I, value=True)
     im = tkinter.Menu(I, tearoff=False)
+    im.add_checkbutton(label="Auto Patch Window", variable=DoAutoPatch)
     im.add_command(label="Exit", command=w.destroy)
 
     img = pickle.loads(zlib.decompress(base64.b85decode(icon)))
@@ -259,7 +288,7 @@ if __name__ == "__main__":
     il.place(x=0, y=0)
     I.protocol("WM_DELETE_WINDOW", lambda: 0)
     I.attributes("-topmost", 1)
-    I.attributes("-alpha", 0.3)
+    I.attributes("-alpha", 0.7)
     I.attributes("-transparentcolor", "#ff0000")
     I.bind("<Enter>", lambda _: I.attributes("-alpha", 0.7))
     I.bind("<Leave>", lambda _: I.attributes("-alpha", 0.3))
