@@ -56,19 +56,19 @@ def has_admin():
         return os.environ["USERNAME"], True
 
 
-# if __name__ == "__main__" and not has_admin()[1]:
-#     p = psutil.Process().cmdline()
-#     res = ctypes.windll.shell32.ShellExecuteW(
-#         0,
-#         ctypes.create_unicode_buffer("runas"),
-#         ctypes.create_unicode_buffer(p[0]),
-#         ctypes.create_unicode_buffer(shlex.join(p[1:])),
-#         0,
-#         5,
-#     )
-#     if res > 32:
-#         raise SystemExit
-#     NoAdmin = True
+if __name__ == "__main__" and not has_admin()[1]:
+    p = psutil.Process().cmdline()
+    res = ctypes.windll.shell32.ShellExecuteW(
+        0,
+        ctypes.create_unicode_buffer("runas"),
+        ctypes.create_unicode_buffer(p[0]),
+        ctypes.create_unicode_buffer(shlex.join(p[1:])),
+        0,
+        5,
+    )
+    if res > 32:
+        raise SystemExit
+    NoAdmin = True
 
 
 @ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
