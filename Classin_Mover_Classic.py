@@ -62,6 +62,7 @@ if __name__ == "__main__" and not has_admin()[1]:
         raise SystemExit
     NoAdmin = True
 
+
 @ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def EnumWindowCallback(hwnd, lParam):
     global ClassInHwnd, ClassInPID, ClassInTitle
