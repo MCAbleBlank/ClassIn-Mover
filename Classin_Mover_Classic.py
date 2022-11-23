@@ -30,6 +30,7 @@ import sys
 import os
 import shlex
 import psutil
+import pathlib
 
 ClassInHwnd = []
 ClassInTitle = []
@@ -169,6 +170,7 @@ if __name__ == "__main__":
     LogScr.pack(fill=tkinter.Y, side=tkinter.RIGHT)
     w.resizable(False, False)
     w.title("ClassIn Mover Classic v2.0.0")
+    w.iconbitmap(str(pathlib.Path(__file__).parent/"ClassIn_Mover.ico"))
 
     def AddText(text):
         LogText.config(state=tkinter.NORMAL)
