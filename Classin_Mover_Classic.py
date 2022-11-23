@@ -155,12 +155,6 @@ def PatchWindow():
         return
 
 
-def Exit():
-    global run
-    run = False
-    w.destroy()
-
-
 if __name__ == "__main__":
     w = tkinter.Tk()
     LogText = tkinter.Text(w, width=100, height=30, font=("Courier", 12), state=tkinter.DISABLED)
@@ -187,9 +181,9 @@ if __name__ == "__main__":
     if NoAdmin:
         AddText("You are running this program without Administrator privilege, the program maybe can't function\n\n")
 
-    w.protocol("WM_DELETE_WINDOW", Exit)
     PatchThread = threading.Thread(target=PatchWindow)
     PatchThread.start()
 
     w.mainloop()
+    run = False
     sys.exit(0)
