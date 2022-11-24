@@ -113,10 +113,8 @@ def ScanWindow():
     while run:
         try:
             st = time.time()
-            if not count % 30:
-                I.attributes("-topmost", 1)
-                w.attributes("-topmost", 1)
             if not w.focus_get():
+                I.attributes("-topmost", 1)
                 w.attributes("-topmost", 1)
             count += 1
             CIHwnd = GetClassInHwnd()
