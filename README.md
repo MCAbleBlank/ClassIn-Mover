@@ -1,4 +1,6 @@
-# ![ClassIn-Mover icon 32x32](ClassIn_Mover_32.png) ClassIn-Mover ![GitHub all releases](https://img.shields.io/github/downloads/CarlGao4/Classin-mover/total)
+# [![ClassIn-Mover icon 32x32](ClassIn_Mover_32.png) ClassIn-Mover ![GitHub all releases](https://img.shields.io/github/downloads/CarlGao4/Classin-mover/total)](https://carlgao4.github.io/ClassIn-Mover/)
+
+[简体中文](https://carlgao4.github.io/ClassIn-Mover/zh-cn)
 
 A program to move `ClassIn` classroom window in order to exit from focused learning mode.
 
