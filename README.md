@@ -35,5 +35,3 @@ As you may have noticed, the latest version uses Python, which means you can run
 ## Known issues
 
 - **This program calls native API and thus can only work on Windows.**
-
-- `Auto Patch` may cause the window to be shown in full screen most of time. To exit from this, please drag on the second region to resize the window. 

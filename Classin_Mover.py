@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.0.1"
+__version__ = "2.0.2"
 
 import tkinter
 import tkinter.ttk
@@ -131,7 +131,7 @@ def ScanWindow():
                     for i in CIHwnd:
                         newvalues.append("%d (Title=%s PID=%d)" % (i[1], i[2], i[0]))
                         if (i[1] not in last) and DoAutoPatch.get():
-                            w.after(1000, lambda: AutoPatch(hwnd=i[1]))
+                            w.after(8500, lambda: AutoPatch(hwnd=i[1]))
                     WindowSelector.config(values=newvalues)
                     last = newset
                     if not WindowSelector.get() in newvalues:
@@ -281,6 +281,19 @@ def AutoPatch(hwnd=None):
         hwnd = GetWindow()
     MoveWindow(hwnd=hwnd, sw=6, InsertAfter=-2)
     w.after(100, lambda: MoveWindow(hwnd=hwnd, sw=3))
+    clientarea = struct.pack("llll", *((0,) * 4))
+    if ctypes.windll.user32.SystemParametersInfoW(0x30, 0, clientarea, 0):
+        clientarea = struct.unpack("llll", clientarea)
+        w.after(
+            200,
+            lambda: MoveWindow(
+                hwnd=hwnd,
+                x=clientarea[0],
+                y=clientarea[1],
+                cx=clientarea[2] - clientarea[0],
+                cy=clientarea[3] - clientarea[1],
+            ),
+        )
 
 
 def startCheckUpdate():
@@ -480,8 +493,12 @@ if __name__ == "__main__":
     I.resizable(False, False)
     DoAutoPatch = tkinter.BooleanVar(I, value=True)
     im = tkinter.Menu(I, tearoff=False)
-    im.add_checkbutton(label="Auto Patch Window", variable=DoAutoPatch)
-    im.add_command(label="Check Updates", command=startCheckUpdate)
+    im.add_checkbutton(label="Auto patch window", variable=DoAutoPatch)
+    im.add_command(
+        label="Patch all",
+        command=lambda: list(AutoPatch(int(i.split(" ", 2)[0])) for i in WindowSelector.cget("values")),
+    )
+    im.add_command(label="Check updates", command=startCheckUpdate)
     im.add_command(label="Exit", command=w.destroy)
 
     img = pickle.loads(zlib.decompress(base64.b85decode(icon)))

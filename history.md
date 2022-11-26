@@ -61,3 +61,13 @@
 > Date: 2022/11/25
 
 - Add auto check updates. 
+
+## 2.0.2
+
+> Date: 2022/11/26
+
+- Fix bug: Window is full screen most of time after patching
+
+- Add "Patch all" to right-click menu
+
+- Auto patch window will now delay 8.5s when a new window detected, to ensure that the classroom has successfully entered. 
