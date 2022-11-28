@@ -1,6 +1,6 @@
 {
     "friendly_name": "简体中文",
-    "%d (Title=%s PID=%d)": "%d（标题：%s PID=%d）",
+    "%d (Title=%s PID=%d)": "%d (标题：%s PID=%d)",
     "Choose a folder to save the new version": "选择保存新版本的目录",
     "(%d) Downloading %s to %s ... %.1f%% (%s/%s)": "（%d）将%s下载到%s… %.1f%%（%s/%s）",
     "Failed to download %s , retrying (%d)": "%s下载失败，重试中… (%d)",
