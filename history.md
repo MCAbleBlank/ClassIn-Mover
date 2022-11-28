@@ -82,7 +82,7 @@
 
 - Fix bug: May receive message box even the main window has been closed
 
-## 2.1.0 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.0/total)
+## 2.1.0.1 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.0.1/total)
 
 > Date: 2022/11/28
 
