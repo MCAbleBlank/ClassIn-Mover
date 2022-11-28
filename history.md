@@ -38,7 +38,7 @@
 
 ---
 
-## 2.0.0
+## 2.0.0 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.0.0/total)
 
 > Date: 2022/11/24
 
@@ -56,13 +56,13 @@
 
 - Stop supporting ClassIn Mover Classic
 
-## 2.0.1
+## 2.0.1 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.0.1/total)
 
 > Date: 2022/11/25
 
 - Add auto check updates. 
 
-## 2.0.2
+## 2.0.2 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.0.2/total)
 
 > Date: 2022/11/26
 
@@ -71,3 +71,13 @@
 - Add "Patch all" to right-click menu
 
 - Auto patch window will now delay 8.5s when a new window detected, to ensure that the classroom has successfully entered. 
+
+## 2.1.0 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.0/total)
+
+> Date: 2022/11/28
+
+- Chinese support
+
+- Add button to open our homepage
+
+- Fix bug: May receive message box even the main window has been closed
