@@ -419,7 +419,8 @@ def CheckUpdate(ShowEvenLatest=False):
         res = urllib.request.urlopen("https://carlgao4.github.io/ClassIn-Mover/update.json")
         newversion = json.loads(res.read())
     except:
-        tkinter.messagebox.showwarning(GetText("Warning"), GetText("Failed to detect new version. "))
+        if run:
+            tkinter.messagebox.showwarning(GetText("Warning"), GetText("Failed to detect new version. "))
         return
     if newversion["version"] > __version__:
         U = tkinter.Toplevel(w)
