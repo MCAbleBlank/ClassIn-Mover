@@ -1,7 +1,7 @@
 """
 ## shlex for all
 
-The standard lib `shlex` provides parsing only for Unix, this libarary is
+The standard lib `shlex` provides parsing only for Unix, this library is
 intended to provide such parsing for all platforms. You can use `join`,
 `split` and `quote` function.
 
@@ -10,8 +10,8 @@ On Windows, the parsing follows documents on https://docs.python.org/3.11/librar
 On other platforms, the functions are same as `shlex`. 
 """
 
-import sys
 import re
+import sys
 from typing import Iterable
 
 __all__ = ["join", "quote"]
@@ -37,6 +37,7 @@ else:
             ret = '"' + ret + '"'
         ret = re.sub('(\\\\+)\\\\"', '\\1\\1\\"', ret)
         return ret
+
 
     def join(s: Iterable):
         return " ".join(quote(i) for i in s)

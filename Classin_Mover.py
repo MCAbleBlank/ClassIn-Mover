@@ -1,7 +1,7 @@
 LICENSE = """ClassIn Mover - A program to move ClassIn classroom window in order to exit from focused learning mode.
 Visit https://carlgao4.github.io/ClassIn-Mover for more information. 
 
-Copyright (C) 2020-2022  Weiqi Gao, Jize Guo
+Copyright (C) 2020-2022  Weiqi Gao, Jize Guo, Yiming Geng
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,35 +17,35 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
 __version__ = "2.1.0.1"
 
-import tkinter
-import tkinter.ttk
-import tkinter.messagebox
-import tkinter.filedialog
+import base64
 import ctypes
 import ctypes.wintypes
-import struct
-import time
 import datetime
-import math
-import threading
-import sys
-import os
-import platform
+import json
 import locale
-import shlex4all
-import psutil
-import PIL
-import PIL.Image
-import PIL.ImageTk
+import logging
+import math
+import os
 import pathlib
 import pickle
-import zlib
-import base64
+import platform
+import struct
+import sys
+import threading
+import time
+import tkinter
+import tkinter.filedialog
+import tkinter.messagebox
+import tkinter.ttk
 import urllib
 import urllib.request
-import json
 import webbrowser
-import logging
+import zlib
+
+import PIL.ImageTk
+import psutil
+
+import shlex4all
 
 ClassInHwnd = []
 ClassInTitle = []
@@ -436,7 +436,7 @@ def CheckUpdate(ShowEvenLatest=False):
             U,
             justify=tkinter.LEFT,
             text=GetText("New version %s detected\nFeatures:\n%s\n\nWe suggest you to update now. ")
-            % (newversion["version"], newversion["feature"]),
+                 % (newversion["version"], newversion["feature"]),
         )
         UpdateInfo.pack(fill=tkinter.X, anchor="nw", padx=(40, 40), pady=(40, 20))
         UF = tkinter.Frame(U)
@@ -460,7 +460,7 @@ def CheckUpdate(ShowEvenLatest=False):
 
 
 def ShowText(
-    master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12), justify=tkinter.LEFT
+        master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12), justify=tkinter.LEFT
 ):
     TL = tkinter.Toplevel(master)
     TL.attributes("-topmost", True)
