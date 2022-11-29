@@ -10,7 +10,7 @@
     "Failed to download": "Download failed",
     "Download failed": "Download failed",
     "Failed to download the latest version. ": "The latest version failed to download.",
-    "Warning": "警告",
+    "Warning": "Warning",
     "Failed to detect new version. ": "Failure to detect a new version.",
     "New version detected": "New version detected.",
     "New version %s detected\nFeatures:\n%s\n\nWe suggest you to update now. ": "New version detected.%s\n Version features：\n%s\n\n We strongly advise you to update to the latest version!",
