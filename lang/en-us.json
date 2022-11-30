@@ -1,8 +1,8 @@
 {
     "friendly_name": "English in American",
-    "%d (Title=%s PID=%d)": "%d (Title：%s PID=%d)",
+    "%d (Title=%s PID=%d)": "%d (Title: %s PID=%d)",
     "Choose a folder to save the new version": "Select the directory where the new version will be saved",
-    "(%d) Downloading %s to %s ... %.1f%% (%s/%s)": "（%d）Download %s to %s... %.1f%%（%s/%s）",
+    "(%d) Downloading %s to %s ... %.1f%% (%s/%s)": "(%d)Download %s to %s... %.1f%% (%s/%s)",
     "Failed to download %s , retrying (%d)": "%s Download failed, retrying… (%d)",
     "Downloading %s to %s ...": "Download %s to %s…",
     "Download complete": "Download complete",
