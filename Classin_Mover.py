@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.1.0.1"
+__version__ = "2.1.1"
 
 import base64
 import ctypes
@@ -187,7 +187,8 @@ def ScanWindow():
             wait = math.ceil(st) - time.time()
             time.sleep(wait if wait >= 0 else 0)
         except:
-            return
+            import traceback
+            logging.critical(traceback.format_exc())
 
 
 def MouseDownI(event):
@@ -273,8 +274,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] if x is None else x,
                 rect[1] if y is None else y,
-                rect[2] - rect[0] if cx is None else cx,
-                rect[3] - rect[1] if cy is None else cy,
+                max(1, rect[2] - rect[0]) if cx is None else cx,
+                max(1, rect[3] - rect[1]) if cy is None else cy,
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
             )
             I.attributes("-topmost", 1)
@@ -287,8 +288,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 hwnd,
                 rect[0] if x is None else x,
                 rect[1] if y is None else y,
-                rect[2] - rect[0] if cx is None else cx,
-                rect[3] - rect[1] if cy is None else cy,
+                max(1, rect[2] - rect[0]) if cx is None else cx,
+                max(1, rect[3] - rect[1]) if cy is None else cy,
                 1,
             )
     else:
@@ -301,8 +302,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] + (0 if x is None else x),
                 rect[1] + (0 if y is None else y),
-                rect[2] - rect[0] + (0 if cx is None else cx),
-                rect[3] - rect[1] + (0 if cy is None else cy),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
             )
             I.attributes("-topmost", 1)
@@ -315,8 +316,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 hwnd,
                 rect[0] + (0 if x is None else x),
                 rect[1] + (0 if y is None else y),
-                rect[2] - rect[0] + (0 if cx is None else cx),
-                rect[3] - rect[1] + (0 if cy is None else cy),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 1,
             )
 
