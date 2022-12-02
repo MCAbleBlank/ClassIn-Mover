@@ -87,3 +87,13 @@
 > Date: 2022/11/28
 
 - Fix bug: Chinese translation cause can't move or resize window
+
+## 2.1.0.2 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.0.2/total)
+
+> Date: 2022/12/2
+
+- Fix bug: program may stop working after long time
+
+- Fix bug: ClassIn window size can be changed into negative number which will cause ClassIn stop responding
+
+- Add "Usage" button
