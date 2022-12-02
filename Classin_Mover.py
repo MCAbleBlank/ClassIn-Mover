@@ -103,9 +103,9 @@ def SetLang(TargetLang):
     MinimizeB.config(text=GetText("Minimize"))
     MaximizeB.config(text=GetText("Maximize"))
     NormalB.config(text=GetText("Normalize"))
-    FullB.config(text=GetText("Full Screen"))
-    TopB.config(text=GetText("Topmost"))
-    NoTopB.config(text=GetText("No Topmost"))
+    FullB.config(text=GetText("Full"))
+    TopB.config(text=GetText("Top"))
+    NoTopB.config(text=GetText("Cancel Top"))
     SwitchB.config(text=GetText("Switch To"))
     AutoB.config(text=GetText("Auto Patch"))
     DragF.config(text=GetText("Drag to move ClassIn window\nDouble click: move to center"))
@@ -359,7 +359,7 @@ def DownloadNew(urls, filename, wnd):
     global downloading, Uwidth
     if downloading:
         return
-    path = tkinter.filedialog.askdirectory(mustexist=True, title=GetText("Choose a folder to save the new version"))
+    path = tkinter.filedialog.askdirectory(mustexist=True, title=GetText("Select the folder"))
     if len(path) == 0:
         return
     path = pathlib.Path(path) / filename
@@ -379,15 +379,15 @@ def DownloadNew(urls, filename, wnd):
             wnd.minsize(Uwidth, 0)
 
     def DownloadCallback(n, d, t):
-        SetStatus(GetText("(%d) Downloading %s to %s ... %.1f%% (%s/%s)")
+        SetStatus(GetText("Download progress")
                   % (j + 1, i, path, 100 * n * d / t, HSize(n * d), HSize(t)))
 
     for i in urls:
         for j in range(3):
             if j:
-                SetStatus(GetText("Failed to download %s , retrying (%d)") % (i, j + 1))
+                SetStatus(GetText("Retrying") % (i, j + 1))
             else:
-                SetStatus(GetText("Downloading %s to %s ...") % (i, path))
+                SetStatus(GetText("Download to") % (i, path))
             try:
                 urllib.request.urlretrieve(i, str(path), DownloadCallback)
             except:
@@ -397,12 +397,12 @@ def DownloadNew(urls, filename, wnd):
                 break
         if success:
             tkinter.messagebox.showinfo(
-                GetText("Download complete"), GetText("Download completed. Please open the latest version. ")
+                GetText("Download complete"), GetText("Explanation of completion ")
             )
             psutil.Process().terminate()
             return
-    SetStatus(GetText("Failed to download"))
-    tkinter.messagebox.showerror(GetText("Download failed"), GetText("Failed to download the latest version. "))
+    SetStatus(GetText("Download failed"))
+    tkinter.messagebox.showerror(GetText("Download failed"), GetText("New version failed"))
     wnd.protocol("WM_DELETE_WINDOW", wnd.destroy)
     downloading = False
 
@@ -413,7 +413,7 @@ def CheckUpdate(ShowEvenLatest=False):
         NewVersion = json.loads(res.read())
     except:
         if run:
-            tkinter.messagebox.showwarning(GetText("Warning"), GetText("Failed to detect new version. "))
+            tkinter.messagebox.showwarning(GetText("Warning"), GetText("NO new version"))
         return
     if NewVersion["version"] > __version__:
         U = tkinter.Toplevel(w)
@@ -428,7 +428,7 @@ def CheckUpdate(ShowEvenLatest=False):
         UpdateInfo = tkinter.Label(
             U,
             justify=tkinter.LEFT,
-            text=GetText("New version %s detected\nFeatures:\n%s\n\nWe suggest you to update now. ")
+            text=GetText("Suggested updates")
                  % (NewVersion["version"], NewVersion["feature"]),
         )
         UpdateInfo.pack(fill=tkinter.X, anchor="nw", padx=(40, 40), pady=(40, 20))
@@ -448,7 +448,7 @@ def CheckUpdate(ShowEvenLatest=False):
         U.focus_force()
     elif ShowEvenLatest:
         tkinter.messagebox.showinfo(
-            GetText("Check update"), GetText("You are using the latest version of ClassIn Mover")
+            GetText("Check update"), GetText("Updated")
         )
 
 
@@ -517,11 +517,11 @@ if __name__ == "__main__":
     NormalB = tkinter.ttk.Button(w, text=GetText("Normalize"), command=lambda: MoveWindow(sw=1))
     FullB = tkinter.ttk.Button(
         w,
-        text=GetText("Full Screen"),
+        text=GetText("Full"),
         command=lambda: MoveWindow(x=0, y=0, cx=w.winfo_screenwidth(), cy=w.winfo_screenheight()),
     )
-    TopB = tkinter.ttk.Button(w, text=GetText("Topmost"), command=lambda: MoveWindow(InsertAfter=-1))
-    NoTopB = tkinter.ttk.Button(w, text=GetText("No Topmost"), command=lambda: MoveWindow(InsertAfter=-2))
+    TopB = tkinter.ttk.Button(w, text=GetText("Top"), command=lambda: MoveWindow(InsertAfter=-1))
+    NoTopB = tkinter.ttk.Button(w, text=GetText("Cancel Top"), command=lambda: MoveWindow(InsertAfter=-2))
     SwitchB = tkinter.ttk.Button(
         w,
         text=GetText("Switch To"),
@@ -554,7 +554,7 @@ if __name__ == "__main__":
     AboutB = tkinter.ttk.Button(
         w,
         text=GetText("About..."),
-        command=lambda: ShowText(w, title=GetText("About ClassIn Mover ") + __version__, text=LICENSE),
+        command=lambda: ShowText(w, title=GetText("About ") + __version__, text=LICENSE),
     )
     ExitB = tkinter.ttk.Button(w, text=GetText("Exit"), command=w.destroy)
 
@@ -594,7 +594,7 @@ if __name__ == "__main__":
             langname = i.rsplit(".", 1)[0]
             with open(pathlib.Path(__file__).parent / "lang" / i, encoding="utf8", mode="rt") as f:
                 lang_data[langname] = json.loads(f.read())
-            lm.add_command(label=lang_data[langname]["friendly_name"], command=lambda x=langname: SetLang(x))
+            lm.add_command(label=lang_data[langname]["LangName"], command=lambda x=langname: SetLang(x))
         except:
             continue
     im.add_cascade(label="Language", menu=lm)
