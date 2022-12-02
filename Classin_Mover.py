@@ -1,7 +1,7 @@
 LICENSE = """ClassIn Mover - A program to move ClassIn classroom window in order to exit from focused learning mode.
 Visit https://carlgao4.github.io/ClassIn-Mover for more information. 
 
-Copyright (C) 2020-2022  Weiqi Gao, Jize Guo
+Copyright (C) 2020-2022  Weiqi Gao, Jize Guo, Yiming Geng
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,37 +15,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.1.0.1"
+__version__ = "2.1.0.2"
 
-import tkinter
-import tkinter.ttk
-import tkinter.messagebox
-import tkinter.filedialog
+import base64
 import ctypes
 import ctypes.wintypes
-import struct
-import time
 import datetime
-import math
-import threading
-import sys
-import os
-import platform
+import json
 import locale
-import shlex4all
-import psutil
-import PIL
-import PIL.Image
-import PIL.ImageTk
+import logging
+import math
+import os
 import pathlib
 import pickle
-import zlib
-import base64
+import platform
+import struct
+import sys
+import threading
+import time
+import tkinter
+import tkinter.filedialog
+import tkinter.messagebox
+import tkinter.ttk
+import traceback
 import urllib
 import urllib.request
-import json
 import webbrowser
-import logging
+import zlib
+
+import PIL.ImageTk
+import psutil
+
+import shlex4all
 
 ClassInHwnd = []
 ClassInTitle = []
@@ -93,16 +94,16 @@ def GetText(t):
         return t
 
 
-def SetLang(targetlang):
+def SetLang(TargetLang):
     global lang
-    lang = targetlang
+    lang = TargetLang
     im.delete(1, tkinter.END)
     im.add_checkbutton(label=GetText("Auto patch new window"), variable=DoAutoPatch)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
     )
-    im.add_command(label=GetText("Check updates"), command=startCheckUpdate)
+    im.add_command(label=GetText("Check updates"), command=StartCheckUpdate)
     im.add_command(label=GetText("Exit"), command=w.destroy)
 
     MinimizeB.config(text=GetText("Minimize"))
@@ -115,6 +116,7 @@ def SetLang(targetlang):
     AutoB.config(text=GetText("Auto Patch"))
     DragF.config(text=GetText("Drag to move ClassIn window\nDouble click: move to center"))
     MoveF.config(text=GetText("Drag to resize ClassIn window\nDouble click: screen size"))
+    UsageB.config(text=GetText("Usage"))
     WebsiteB.config(text=GetText("Website"))
     AboutB.config(text=GetText("About..."))
     ExitB.config(text=GetText("Exit"))
@@ -125,22 +127,22 @@ def SetLang(targetlang):
 @ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def EnumWindowCallback(hwnd, lParam):
     global ClassInHwnd, ClassInPID, ClassInTitle
-    textlen = ctypes.windll.user32.GetWindowTextLengthW(hwnd)
-    text = ctypes.create_unicode_buffer("", textlen + 20)
-    ctypes.windll.user32.GetWindowTextW(hwnd, text, textlen + 20)
+    TextLen = ctypes.windll.user32.GetWindowTextLengthW(hwnd)
+    text = ctypes.create_unicode_buffer("", TextLen + 20)
+    ctypes.windll.user32.GetWindowTextW(hwnd, text, TextLen + 20)
     Caption = text.value
     if not Caption.startswith("Classroom_"):
         return 1
     pid = struct.pack("l", (0))
     ctypes.windll.user32.GetWindowThreadProcessId(hwnd, pid)
     pid = struct.unpack("l", pid)[0]
-    processHandle = ctypes.windll.kernel32.OpenProcess(0x0410, 0, pid)
-    if processHandle == 0:
+    ProcessHandle = ctypes.windll.kernel32.OpenProcess(0x0410, 0, pid)
+    if ProcessHandle == 0:
         return 1
-    name_buffer = ctypes.create_unicode_buffer("", 260)
-    ctypes.windll.psapi.GetModuleFileNameExW(processHandle, 0, name_buffer, 260)
-    ctypes.windll.kernel32.CloseHandle(processHandle)
-    if not name_buffer.value.lower().endswith("classin.exe"):
+    Name_Buffer = ctypes.create_unicode_buffer("", 260)
+    ctypes.windll.psapi.GetModuleFileNameExW(ProcessHandle, 0, Name_Buffer, 260)
+    ctypes.windll.kernel32.CloseHandle(ProcessHandle)
+    if not Name_Buffer.value.lower().endswith("classin.exe"):
         return 1
     ClassInHwnd.append(hwnd)
     ClassInTitle.append(Caption)
@@ -170,24 +172,24 @@ def ScanWindow():
             count += 1
             CIHwnd = GetClassInHwnd()
             if len(CIHwnd) != 0:
-                newvalues = []
-                newset = set(i[1] for i in CIHwnd)
-                if newset != last:
+                NewValues = []
+                NewSet = set(i[1] for i in CIHwnd)
+                if NewSet != last:
                     for i in CIHwnd:
-                        newvalues.append(GetText("%d (Title=%s PID=%d)") % (i[1], i[2], i[0]))
+                        NewValues.append(GetText("%d (Title=%s PID=%d)") % (i[1], i[2], i[0]))
                         if (i[1] not in last) and DoAutoPatch.get():
                             w.after(8500, lambda: AutoPatch(hwnd=i[1]))
-                    WindowSelector.config(values=newvalues)
-                    last = newset
-                    if not WindowSelector.get() in newvalues:
-                        WindowSelector.set(newvalues[0])
+                    WindowSelector.config(values=NewValues)
+                    last = NewSet
+                    if not WindowSelector.get() in NewValues:
+                        WindowSelector.set(NewValues[0])
             elif len(WindowSelector.get()) != 0:
                 WindowSelector.set("")
                 WindowSelector.config(values=[])
-            wait = math.ceil(st) - time.time()
-            time.sleep(wait if wait >= 0 else 0)
         except:
-            return
+            logging.critical(traceback.format_exc())
+        wait = math.ceil(st) - time.time()
+        time.sleep(wait if wait >= 0 else 0)
 
 
 def MouseDownI(event):
@@ -273,8 +275,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] if x is None else x,
                 rect[1] if y is None else y,
-                rect[2] - rect[0] if cx is None else cx,
-                rect[3] - rect[1] if cy is None else cy,
+                max(1, rect[2] - rect[0] if cx is None else cx),
+                max(1, rect[3] - rect[1] if cy is None else cy),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
             )
             I.attributes("-topmost", 1)
@@ -287,8 +289,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 hwnd,
                 rect[0] if x is None else x,
                 rect[1] if y is None else y,
-                rect[2] - rect[0] if cx is None else cx,
-                rect[3] - rect[1] if cy is None else cy,
+                max(1, rect[2] - rect[0] if cx is None else cx),
+                max(1, rect[3] - rect[1] if cy is None else cy),
                 1,
             )
     else:
@@ -301,8 +303,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] + (0 if x is None else x),
                 rect[1] + (0 if y is None else y),
-                rect[2] - rect[0] + (0 if cx is None else cx),
-                rect[3] - rect[1] + (0 if cy is None else cy),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
             )
             I.attributes("-topmost", 1)
@@ -315,8 +317,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 hwnd,
                 rect[0] + (0 if x is None else x),
                 rect[1] + (0 if y is None else y),
-                rect[2] - rect[0] + (0 if cx is None else cx),
-                rect[3] - rect[1] + (0 if cy is None else cy),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 1,
             )
 
@@ -341,7 +343,7 @@ def AutoPatch(hwnd=None):
         )
 
 
-def startCheckUpdate():
+def StartCheckUpdate():
     global UpdateThread
     if not UpdateThread.is_alive():
         UpdateThread = threading.Thread(target=CheckUpdate, args=(True,))
@@ -376,7 +378,7 @@ def DownloadNew(urls, filename, wnd):
     status.pack(anchor="w")
     Uwidth = 0
 
-    def setstatus(text):
+    def SetStatus(text):
         global Uwidth
         status.config(text=text)
         if wnd.winfo_width() > Uwidth:
@@ -384,17 +386,15 @@ def DownloadNew(urls, filename, wnd):
             wnd.minsize(Uwidth, 0)
 
     def DownloadCallback(n, d, t):
-        setstatus(
-            GetText("(%d) Downloading %s to %s ... %.1f%% (%s/%s)")
-            % (j + 1, i, path, 100 * n * d / t, HSize(n * d), HSize(t))
-        )
+        SetStatus(GetText("(%d) Downloading %s to %s ... %.1f%% (%s/%s)")
+                  % (j + 1, i, path, 100 * n * d / t, HSize(n * d), HSize(t)))
 
     for i in urls:
         for j in range(3):
             if j:
-                setstatus(GetText("Failed to download %s , retrying (%d)") % (i, j + 1))
+                SetStatus(GetText("Failed to download %s , retrying (%d)") % (i, j + 1))
             else:
-                setstatus(GetText("Downloading %s to %s ...") % (i, path))
+                SetStatus(GetText("Downloading %s to %s ...") % (i, path))
             try:
                 urllib.request.urlretrieve(i, str(path), DownloadCallback)
             except:
@@ -408,7 +408,7 @@ def DownloadNew(urls, filename, wnd):
             )
             psutil.Process().terminate()
             return
-    setstatus(GetText("Failed to download"))
+    SetStatus(GetText("Failed to download"))
     tkinter.messagebox.showerror(GetText("Download failed"), GetText("Failed to download the latest version. "))
     wnd.protocol("WM_DELETE_WINDOW", wnd.destroy)
     downloading = False
@@ -417,12 +417,13 @@ def DownloadNew(urls, filename, wnd):
 def CheckUpdate(ShowEvenLatest=False):
     try:
         res = urllib.request.urlopen("https://carlgao4.github.io/ClassIn-Mover/update.json")
-        newversion = json.loads(res.read())
+        NewVersion = json.loads(res.read())
     except:
+        logging.critical(traceback.format_exc())
         if run:
             tkinter.messagebox.showwarning(GetText("Warning"), GetText("Failed to detect new version. "))
         return
-    if newversion["version"] > __version__:
+    if NewVersion["version"] > __version__:
         U = tkinter.Toplevel(w)
         U.title(GetText("New version detected"))
         U.resizable(False, False)
@@ -436,16 +437,16 @@ def CheckUpdate(ShowEvenLatest=False):
             U,
             justify=tkinter.LEFT,
             text=GetText("New version %s detected\nFeatures:\n%s\n\nWe suggest you to update now. ")
-            % (newversion["version"], newversion["feature"]),
+                 % (NewVersion["version"], NewVersion["feature"]),
         )
         UpdateInfo.pack(fill=tkinter.X, anchor="nw", padx=(40, 40), pady=(40, 20))
         UF = tkinter.Frame(U)
-        ViewB = tkinter.ttk.Button(UF, text=GetText("View"), command=lambda: webbrowser.open(newversion["detail"]))
+        ViewB = tkinter.ttk.Button(UF, text=GetText("View"), command=lambda: webbrowser.open(NewVersion["detail"]))
         DownloadB = tkinter.ttk.Button(
             UF,
             text=GetText("Download"),
             command=lambda: threading.Thread(
-                target=DownloadNew, args=(newversion["download"], newversion["filename"], U)
+                target=DownloadNew, args=(NewVersion["download"], NewVersion["filename"], U)
             ).start(),
         )
         ViewB.grid(row=0, column=0, padx=(0, 10))
@@ -460,7 +461,7 @@ def CheckUpdate(ShowEvenLatest=False):
 
 
 def ShowText(
-    master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12), justify=tkinter.LEFT
+        master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12), justify=tkinter.LEFT
 ):
     TL = tkinter.Toplevel(master)
     TL.attributes("-topmost", True)
@@ -485,10 +486,10 @@ def ShowText(
 
 
 if __name__ == "__main__":
-    logfolder = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "log"
-    logfolder.mkdir(parents=True, exist_ok=True)
+    LogFolder = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "log"
+    LogFolder.mkdir(parents=True, exist_ok=True)
     log = open(
-        str(logfolder / datetime.datetime.now().strftime("ClassIn-Mover-Log-%Y%m%d-%H%M%S.log")),
+        str(LogFolder / datetime.datetime.now().strftime("ClassIn-Mover-Log-%Y%m%d-%H%M%S.log")),
         mode="wt",
         encoding="utf8",
     )
@@ -553,10 +554,15 @@ if __name__ == "__main__":
         labelanchor="n",
         text=GetText("Drag to resize ClassIn window\nDouble click: screen size"),
     )
+    UsageB = tkinter.ttk.Button(
+        w,
+        text=GetText("Usage"),
+        command=lambda: webbrowser.open("https://classin-mover.pages.dev/usage?version=" + __version__),
+    )
     WebsiteB = tkinter.ttk.Button(
         w,
         text=GetText("Website"),
-        command=lambda: webbrowser.open("https://carlgao4.github.io/ClassIn-Mover/app?version=" + __version__),
+        command=lambda: webbrowser.open("https://classin-mover.pages.dev/app?version=" + __version__),
     )
     AboutB = tkinter.ttk.Button(
         w,
@@ -576,6 +582,7 @@ if __name__ == "__main__":
     AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
     DragF.grid(row=3, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
     MoveF.grid(row=3, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
+    UsageB.grid(row=4, column=0, padx=(20, 5), pady=(5, 20))
     WebsiteB.grid(row=4, column=1, padx=(5, 5), pady=(5, 20))
     AboutB.grid(row=4, column=2, padx=(5, 5), pady=(5, 20))
     ExitB.grid(row=4, column=3, padx=(5, 20), pady=(5, 20))
@@ -603,14 +610,14 @@ if __name__ == "__main__":
                 lang_data[langname] = json.loads(f.read())
             lm.add_command(label=lang_data[langname]["friendly_name"], command=lambda x=langname: SetLang(x))
         except:
-            continue
+            logging.critical(traceback.format_exc())
     im.add_cascade(label="Language", menu=lm)
     im.add_checkbutton(label=GetText("Auto patch new window"), variable=DoAutoPatch)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
     )
-    im.add_command(label=GetText("Check updates"), command=startCheckUpdate)
+    im.add_command(label=GetText("Check updates"), command=StartCheckUpdate)
     im.add_command(label=GetText("Exit"), command=w.destroy)
 
     img = pickle.loads(zlib.decompress(base64.b85decode(icon)))
