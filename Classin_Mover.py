@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.1.0.1"
+__version__ = "2.1.1"
 
 import base64
 import ctypes
@@ -44,6 +44,7 @@ import zlib
 
 import PIL.ImageTk
 import psutil
+from win10toast_click import ToastNotifier
 
 import shlex4all
 
@@ -85,14 +86,20 @@ if __name__ == "__main__" and not has_admin()[1]:
 
 def GetText(t):
     global lang
-    return lang_data[lang][t]
+    try:
+        return lang_data[lang][t]
+    except:
+        Toast = ToastNotifier()
+        Toast.show_toast('Language error',
+                         'You may be able to resolve the issue by changing the system language to Simplified Chinese or English',
+                         icon_path='/ClassIn_Mover.ico', duration=5)
 
 
 def SetLang(TargetLang):
     global lang
     lang = TargetLang
     im.delete(1, tkinter.END)
-    im.add_checkbutton(label=GetText("Auto patch new window"), variable=DoAutoPatch)
+    im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
@@ -108,8 +115,8 @@ def SetLang(TargetLang):
     NoTopB.config(text=GetText("Cancel Top"))
     SwitchB.config(text=GetText("Switch To"))
     AutoB.config(text=GetText("Auto Patch"))
-    DragF.config(text=GetText("Drag to move ClassIn window\nDouble click: move to center"))
-    MoveF.config(text=GetText("Drag to resize ClassIn window\nDouble click: screen size"))
+    DragF.config(text=GetText("Move"))
+    MoveF.config(text=GetText("Resize"))
     WebsiteB.config(text=GetText("Website"))
     AboutB.config(text=GetText("About..."))
     ExitB.config(text=GetText("Exit"))
@@ -153,7 +160,7 @@ def GetClassInHwnd():
 
 
 def ScanWindow():
-    global run
+    global run, st
     last = set()
     count = 0
     while run:
@@ -179,10 +186,10 @@ def ScanWindow():
             elif len(WindowSelector.get()) != 0:
                 WindowSelector.set("")
                 WindowSelector.config(values=[])
-            wait = math.ceil(st) - time.time()
-            time.sleep(wait if wait >= 0 else 0)
         except:
-            return
+            logging.critical(traceback.format_exc())
+        wait = math.ceil(st) - time.time()
+        time.sleep(wait if wait >= 0 else 0)
 
 
 def MouseDownI(event):
@@ -268,8 +275,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] if x is None else x,
                 rect[1] if y is None else y,
-                rect[2] - rect[0] if cx is None else cx,
-                rect[3] - rect[1] if cy is None else cy,
+                max(1, rect[2] - rect[0] if cx is None else cx),
+                max(1, rect[3] - rect[1] if cy is None else cy),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
             )
             I.attributes("-topmost", 1)
@@ -280,8 +287,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             rect = struct.unpack("llll", rect)
             ctypes.windll.user32.MoveWindow(
                 hwnd,
-                rect[0] if x is None else x,
-                rect[1] if y is None else y,
+                max(1, rect[2] - rect[0] if cx is None else cx),
+                max(1, rect[3] - rect[1] if cy is None else cy),
                 rect[2] - rect[0] if cx is None else cx,
                 rect[3] - rect[1] if cy is None else cy,
                 1,
@@ -294,8 +301,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             ctypes.windll.user32.SetWindowPos(
                 hwnd,
                 ctypes.wintypes.HWND(InsertAfter),
-                rect[0] + (0 if x is None else x),
-                rect[1] + (0 if y is None else y),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 rect[2] - rect[0] + (0 if cx is None else cx),
                 rect[3] - rect[1] + (0 if cy is None else cy),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
@@ -308,8 +315,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             rect = struct.unpack("llll", rect)
             ctypes.windll.user32.MoveWindow(
                 hwnd,
-                rect[0] + (0 if x is None else x),
-                rect[1] + (0 if y is None else y),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 rect[2] - rect[0] + (0 if cx is None else cx),
                 rect[3] - rect[1] + (0 if cy is None else cy),
                 1,
@@ -412,6 +419,7 @@ def CheckUpdate(ShowEvenLatest=False):
         res = urllib.request.urlopen("https://carlgao4.github.io/ClassIn-Mover/update.json")
         NewVersion = json.loads(res.read())
     except:
+        logging.critical(traceback.format_exc())
         if run:
             tkinter.messagebox.showwarning(GetText("Warning"), GetText("NO new version"))
         return
@@ -544,12 +552,17 @@ if __name__ == "__main__":
         bd=0,
         bg="#cccccc",
         labelanchor="n",
-        text=GetText("Drag to resize ClassIn window\nDouble click: screen size"),
+        text=GetText("Resize"),
+    )
+    UsageB = tkinter.ttk.Button(
+        w,
+        text=GetText("Usage"),
+        command=lambda: webbrowser.open("https://classin-mover.pages.dev/usage?version=" + __version__),
     )
     WebsiteB = tkinter.ttk.Button(
         w,
         text=GetText("Website"),
-        command=lambda: webbrowser.open("https://carlgao4.github.io/ClassIn-Mover/app?version=" + __version__),
+        command=lambda: webbrowser.open("https://classin-mover.pages.dev/app?version=" + __version__),
     )
     AboutB = tkinter.ttk.Button(
         w,
@@ -568,6 +581,7 @@ if __name__ == "__main__":
     SwitchB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
     AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
     DragF.grid(row=3, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
+    UsageB.grid(row=4, column=0, padx=(20, 5), pady=(5, 20))
     MoveF.grid(row=3, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
     WebsiteB.grid(row=4, column=1, padx=(5, 5), pady=(5, 20))
     AboutB.grid(row=4, column=2, padx=(5, 5), pady=(5, 20))
@@ -596,9 +610,9 @@ if __name__ == "__main__":
                 lang_data[langname] = json.loads(f.read())
             lm.add_command(label=lang_data[langname]["LangName"], command=lambda x=langname: SetLang(x))
         except:
-            continue
+            logging.critical(traceback.format_exc())
     im.add_cascade(label="Language", menu=lm)
-    im.add_checkbutton(label=GetText("Auto patch new window"), variable=DoAutoPatch)
+    im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
