@@ -4,7 +4,7 @@
     "Select the folder": "Select the folder where the new version will be saved",
     "Download progress": "（%d）Download %s to %s... %.1f%%（%s/%s）",
     "Retrying": "%s Download failed, retrying… (%d)",
-    "Download to": "Download %s to %s…",
+    "Download to": "Download %s to %s...",
     "Download complete": "Download complete",
     "Explanation of completion ": "The download is complete. Please launch the latest version.",
     "Download failed": "Download failed",

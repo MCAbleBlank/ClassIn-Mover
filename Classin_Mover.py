@@ -44,7 +44,6 @@ import zlib
 
 import PIL.ImageTk
 import psutil
-from win10toast_click import ToastNotifier
 
 import shlex4all
 
@@ -89,10 +88,10 @@ def GetText(t):
     try:
         return lang_data[lang][t]
     except:
-        Toast = ToastNotifier()
-        Toast.show_toast('Language error',
-                         'You may be able to resolve the issue by changing the system language to Simplified Chinese or English',
-                         icon_path='/ClassIn_Mover.ico', duration=5)
+        try:
+            return lang_data["en-us"][t]
+        except:
+            return t
 
 
 def SetLang(TargetLang):
@@ -160,7 +159,7 @@ def GetClassInHwnd():
 
 
 def ScanWindow():
-    global run, st
+    global run
     last = set()
     count = 0
     while run:
@@ -303,8 +302,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 ctypes.wintypes.HWND(InsertAfter),
                 max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
                 max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
-                rect[2] - rect[0] + (0 if cx is None else cx),
-                rect[3] - rect[1] + (0 if cy is None else cy),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
             )
             I.attributes("-topmost", 1)
@@ -317,8 +316,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 hwnd,
                 max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
                 max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
-                rect[2] - rect[0] + (0 if cx is None else cx),
-                rect[3] - rect[1] + (0 if cy is None else cy),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 1,
             )
 
@@ -581,8 +580,8 @@ if __name__ == "__main__":
     SwitchB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
     AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
     DragF.grid(row=3, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
-    UsageB.grid(row=4, column=0, padx=(20, 5), pady=(5, 20))
     MoveF.grid(row=3, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
+    UsageB.grid(row=4, column=0, padx=(20, 5), pady=(5, 20))
     WebsiteB.grid(row=4, column=1, padx=(5, 5), pady=(5, 20))
     AboutB.grid(row=4, column=2, padx=(5, 5), pady=(5, 20))
     ExitB.grid(row=4, column=3, padx=(5, 20), pady=(5, 20))
