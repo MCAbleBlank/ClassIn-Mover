@@ -116,6 +116,7 @@ def SetLang(TargetLang):
     AutoB.config(text=GetText("Auto Patch"))
     DragF.config(text=GetText("Move"))
     MoveF.config(text=GetText("Resize"))
+    UsageB.config(text=GetText("Usage"))
     WebsiteB.config(text=GetText("Website"))
     AboutB.config(text=GetText("About..."))
     ExitB.config(text=GetText("Exit"))
@@ -286,10 +287,10 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             rect = struct.unpack("llll", rect)
             ctypes.windll.user32.MoveWindow(
                 hwnd,
+                rect[0] if x is None else x,
+                rect[1] if y is None else y,
                 max(1, rect[2] - rect[0] if cx is None else cx),
                 max(1, rect[3] - rect[1] if cy is None else cy),
-                rect[2] - rect[0] if cx is None else cx,
-                rect[3] - rect[1] if cy is None else cy,
                 1,
             )
     else:
@@ -300,8 +301,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             ctypes.windll.user32.SetWindowPos(
                 hwnd,
                 ctypes.wintypes.HWND(InsertAfter),
-                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
-                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
+                rect[0] + (0 if x is None else x),
+                rect[1] + (0 if y is None else y),
                 max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
                 max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 (2 if x is None and y is None else 0) + (1 if cx is None and cy is None else 0),
@@ -314,8 +315,8 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             rect = struct.unpack("llll", rect)
             ctypes.windll.user32.MoveWindow(
                 hwnd,
-                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
-                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
+                rect[0] + (0 if x is None else x),
+                rect[1] + (0 if y is None else y),
                 max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
                 max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 1,
