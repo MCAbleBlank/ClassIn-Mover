@@ -1,7 +1,7 @@
 # ClassIn Mover - A program to move ClassIn classroom window in order to
 # exit from focused learning mode.
 
-# Copyright (C) 2020-2022  Weiqi Gao, Jize Guo
+# Copyright (C) 2020-2022  Weiqi Gao, Jize Guo, Yiming Geng
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,20 +17,22 @@
 
 __version__ = "2.0.0c"
 
-import tkinter
-import tkinter.ttk
 import ctypes
 import ctypes.wintypes
-import struct
-import time
 import datetime
 import math
-import threading
-import sys
 import os
-import shlex4all
-import psutil
 import pathlib
+import struct
+import sys
+import threading
+import time
+import tkinter
+import tkinter.ttk
+
+import psutil
+
+import shlex4all
 
 ClassInHwnd = []
 ClassInTitle = []
@@ -168,6 +170,7 @@ if __name__ == "__main__":
     w.title("ClassIn Mover Classic v2.0.0")
     w.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
 
+
     def AddText(text):
         LogText.config(state=tkinter.NORMAL)
         End = LogScr.get()[1] == 1
@@ -175,6 +178,7 @@ if __name__ == "__main__":
         if End:
             LogText.see(tkinter.END)
         LogText.config(state=tkinter.DISABLED)
+
 
     AddText("ClassIn Mover Classic v2.0.0\n")
     AddText("Copyright (C) 2020-2022  Weiqi Gao, Jize Guo\n")
