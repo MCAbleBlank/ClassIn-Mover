@@ -97,3 +97,15 @@
 - Fix bug: ClassIn window size can be changed into negative number which will cause ClassIn stop responding
 
 - Add "Usage" button
+
+## 2.1.1 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.1/total)
+
+> Date: 2022/12/5
+
+- Fix grammar and translation
+
+- The main window will appear beside the floating window
+
+- Add alternative update link
+
+- Optimize codes
