@@ -37,6 +37,7 @@ import tkinter
 import tkinter.filedialog
 import tkinter.messagebox
 import tkinter.ttk
+import traceback
 import urllib
 import urllib.request
 import webbrowser
@@ -54,8 +55,13 @@ run = True
 NoAdmin = False
 downloading = False
 icon = "c-rllZA=q)9LG^vra)9$9)zMi$wMi9rnIz_KG0Iy0s<wnk%@@wY88-y7~E7~iwFv)NUPDPyx7=YxoM0L!%V<;>I`Itn8mm#V=s)^1mnzNWbC^;X>O&ID|2&M{N`w`$Mt@n`#t@Ccddc0dR73TE=IAjfTyjkH`Z>mS&M6$Z1y^5SBTDDO&rLx*I1psPIjAfi!=3rGqr2Q`}KCGA>gIlJMGS{;O)C>>l>_%jrQGjPIEw0*NReu)@c@)1?|ovZ2;`ezS-VvuXg))<PS_?VWC2yP^nZoIXOzD68mzwTq>1jW@ct&WQar}p-{-@^Lad8dU|?VT3TvqYD!8<Qc_Z4Vq$!Jd|X`Ih7B9muV2q%v7(}))~#C?85tQC7RF#Of`WpWOr{@5v$NUR+4=eTX0zF7G-4+&FHf)6=jP^WwOX}WO(m4cWFVACBx11`kOF}Kgj_C{!{JaNH*VaRkdOe#*w|P=f-Qi&aeB^yU4LQVuK6&@$;qV000XCyFflPP(b3Us*RG}IqS;xJ#AGrp1OxApFbE&jGYFp>hRtS^Fr;TZU`Ww&5#gMCLQ4pfM=p7UiG*Rzi9V0PU|19eS?%E&Hw@J??!@+hq0fVw(i5V>AVz@6%F3GW8ETjo@(iq#F<Jr-tb;_S(`hsszyOc*%zPN+@S<UYbG*XP=YcD<gci*iub%N*O)PJs$ph<ZLVoobkDT!lCVzQg+M_Kmt?9W-o3(&w@}R3I3H|-1=L3d54@`r^-Sm9qjMt_ILs+LmLqi$fgoVss9yAt|5(xtmn4>O^_=Hcqh6(=)2?<%VW)0Tj^78UBLKcgqw6wIOq@=jGxU#Ym9(E(q<bfY#ga8IdO;1lhdGh3ELfF4}@gm{{(;f*7D}d?i>+>;RjE#-q9Cr|D^57Q8xdP5XXb`yhS4IQJ8tsM&4-d!Z^XJcfzzhrwEL*k=vxmR&LWW2PkvW4T0h`rott135k=I89N1gx!!wfv;Vg2dTr@zi=W@hHnrAr<#^m*VDF(G#XBU{MwL72cWF)=|J#S8%d;{+;6cX#*l<;!7fIYp~hty*$_M(v0Qc`a=e5k{BE$w{0!Iy#Cxr^485Hdy!Y11a~I;V%zNd+jssYC=)3UcI`%zaQ?R!l0~R;_W#_L_|<wFtlQ$BGKf5X>u_3(e%(>07iv*`0(L{3l~O4MuvxnuU)%#_wHS+I6xvuqHqhGbX-%21r}dPB$_<%1DDW3O%E5u0O0%4p}D!4ENz@jw6Da%O%)2Ik;CD+k!bS3G)R1m5V&i!xP?d_Ja~ZIBNG_HPvYW}6iU-CkEie5yU*dt;V4`LNHlp6lr%y<COvfiz`($onwl$Dt{^ny<Ku&agD#f~S%>4OK{97zVpz#398K<~XU~3nNjotq$;{;o#Pt1xh@=woJ?Y^FQD`eyu6&CSb`T&mMt2?I1U!dv`HItL`Y&G|y7$BVv9a3&16SKSdKKAuxHFnOFr7k({-o!vuA`!fB+==ODph`Rim0va$U7BQp;)QWm<kFuq1I^fz-|&D`jg&Y>lz6ho66>jGB9#yM@B}#v`8#D(&e=8Y{FoLuQ-^MrHGABqr(H!An|L`qr&|8tQ?<YG;gk~sxz63!o!hGOg>L|l;Dxe75I*WQkkl8Z=2p=S(FD?P9Q{o(sR?|7jbb(Sqj687c=`lZrAHgs8dv{P$W6jer#KHom!(MYB!xPkbT~N{?486v$FGj^N=0GuSw6%!)9~y^2<=#xXu?}o-eUfZr!#ETdAe;tFJHj96wc7UcIHtzGbVupy=Iiu8!ce>({?E7|VR{puNNrq7O626UF6aH0(J@miCPsx4Ms=aJtU+y3TfWpBNpzJv20YwA<x4e%j$U)zRtr?)Lc1%!|n%e=4<XJ=gb{kNP6#KspKR;U83GTs*s~x)#@I+S?{qXmeEB9HmAimbbKZR=j6ZYxGK`My1lGurtn_>wom<kuI;arM2Dn`wh&Te!)=l8I3C;F|DqC--nH@sOt!{r0_6-Ky<jX$F`#p(_J`m1o_<2*;`mt(e}yVMN>K`C<q<cUmhwFUm%r8btZEGOf#7bK3~}0;Q)^U^~GdjIYx%-4P_l2$7sF+!b*Y8AF?C`2M044p;#<nS0uvILAF3BJ=oHLc&XGnsZ1f2%KUg=_v+psI-R|0ZP5oins(JT4-5{S>+9cDyRU5X_J+p&uj|#Q!*SBSa}PoHJN~8~Kem)rIeJ{L@onu#`#;6XH8nMbDHm(~;tBlEZ~G4%vh8Rvn#)^S5B*2pY4;pIdGqG2H}CfUf1A@<&HDox^xKy"
-lang = "en-us"
+lang = locale.getdefaultlocale()[0].lower().replace("_", "-")
 lang_data = {}
+user32 = ctypes.windll.user32
+UpdateURL = [
+    "http://update.classin-mover.rosa.ink/update.json",
+    "https://carlgao4.github.io/ClassIn-Mover/update.json",
+]
 
 
 def has_admin():
@@ -127,14 +133,14 @@ def SetLang(TargetLang):
 @ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def EnumWindowCallback(hwnd, lParam):
     global ClassInHwnd, ClassInPID, ClassInTitle
-    TextLen = ctypes.windll.user32.GetWindowTextLengthW(hwnd)
+    TextLen = user32.GetWindowTextLengthW(hwnd)
     text = ctypes.create_unicode_buffer("", TextLen + 20)
-    ctypes.windll.user32.GetWindowTextW(hwnd, text, TextLen + 20)
+    user32.GetWindowTextW(hwnd, text, TextLen + 20)
     Caption = text.value
     if not Caption.startswith("Classroom_"):
         return 1
     pid = struct.pack("l", (0))
-    ctypes.windll.user32.GetWindowThreadProcessId(hwnd, pid)
+    user32.GetWindowThreadProcessId(hwnd, pid)
     pid = struct.unpack("l", pid)[0]
     ProcessHandle = ctypes.windll.kernel32.OpenProcess(0x0410, 0, pid)
     if ProcessHandle == 0:
@@ -155,7 +161,7 @@ def GetClassInHwnd():
     ClassInHwnd = []
     ClassInTitle = []
     ClassInPID = []
-    ctypes.windll.user32.EnumWindows(EnumWindowCallback, 0)
+    user32.EnumWindows(EnumWindowCallback, 0)
     return list(zip(ClassInPID, ClassInHwnd, ClassInTitle))
 
 
@@ -176,7 +182,7 @@ def ScanWindow():
                 NewSet = set(i[1] for i in CIHwnd)
                 if NewSet != last:
                     for i in CIHwnd:
-                        NewValues.append(GetText("%d (Title=%s PID=%d)") % (i[1], i[2], i[0]))
+                        NewValues.append(GetText("%d (Title=%s PID=%d)").format(pid=i[0], hwnd=i[1], title=i[2]))
                         if (i[1] not in last) and DoAutoPatch.get():
                             w.after(8500, lambda: AutoPatch(hwnd=i[1]))
                     WindowSelector.config(values=NewValues)
@@ -217,21 +223,21 @@ def MouseDownM(event):
 
 def MouseMoveM(event):
     MoveWindow(x=event.x_root - mx, y=event.y_root - my, relative=True)
-    ctypes.windll.user32.SetCursorPos(mx, my)
+    user32.SetCursorPos(mx, my)
 
 
 def MouseMoveR(event):
     MoveWindow(cx=event.x_root - mx, cy=event.y_root - my, relative=True)
-    ctypes.windll.user32.SetCursorPos(mx, my)
+    user32.SetCursorPos(mx, my)
 
 
 def Center():
     if not (hwnd := GetWindow()):
         return
     rect = struct.pack("llll", *([0] * 4))
-    ctypes.windll.user32.GetWindowRect(hwnd, rect)
+    user32.GetWindowRect(hwnd, rect)
     rect = struct.unpack("llll", rect)
-    ctypes.windll.user32.MoveWindow(
+    user32.MoveWindow(
         hwnd,
         (w.winfo_screenwidth() - rect[2] + rect[0]) // 2,
         (w.winfo_screenheight() - rect[3] + rect[1]) // 2,
@@ -247,6 +253,16 @@ def SwitchController():
         w.withdraw()
         root_shown = False
     else:
+        place = ""
+        if I.winfo_rootx() + 24 <= w.winfo_screenwidth() // 2:
+            place += f"+{I.winfo_rootx() + 56}"
+        else:
+            place += f"+{I.winfo_rootx() - 16 - w.winfo_width()}"
+        if I.winfo_rooty() + 24 <= w.winfo_screenheight() // 2:
+            place += f"+{I.winfo_rooty()}"
+        else:
+            place += f"+{I.winfo_rooty() - w.winfo_height()}"
+        w.geometry(place)
         w.deiconify()
         root_shown = True
 
@@ -264,13 +280,13 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
     if not hwnd:
         return
     if sw is not None:
-        ctypes.windll.user32.ShowWindow(hwnd, sw)
+        user32.ShowWindow(hwnd, sw)
     if not relative:
         if InsertAfter is not None:
             rect = struct.pack("llll", *([0] * 4))
-            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            user32.GetWindowRect(hwnd, rect)
             rect = struct.unpack("llll", rect)
-            ctypes.windll.user32.SetWindowPos(
+            user32.SetWindowPos(
                 hwnd,
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] if x is None else x,
@@ -283,9 +299,9 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             w.attributes("-topmost", 1)
         else:
             rect = struct.pack("llll", *([0] * 4))
-            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            user32.GetWindowRect(hwnd, rect)
             rect = struct.unpack("llll", rect)
-            ctypes.windll.user32.MoveWindow(
+            user32.MoveWindow(
                 hwnd,
                 rect[0] if x is None else x,
                 rect[1] if y is None else y,
@@ -296,9 +312,9 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
     else:
         if InsertAfter is not None:
             rect = struct.pack("llll", *([0] * 4))
-            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            user32.GetWindowRect(hwnd, rect)
             rect = struct.unpack("llll", rect)
-            ctypes.windll.user32.SetWindowPos(
+            user32.SetWindowPos(
                 hwnd,
                 ctypes.wintypes.HWND(InsertAfter),
                 rect[0] + (0 if x is None else x),
@@ -311,9 +327,9 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             w.attributes("-topmost", 1)
         else:
             rect = struct.pack("llll", *([0] * 4))
-            ctypes.windll.user32.GetWindowRect(hwnd, rect)
+            user32.GetWindowRect(hwnd, rect)
             rect = struct.unpack("llll", rect)
-            ctypes.windll.user32.MoveWindow(
+            user32.MoveWindow(
                 hwnd,
                 rect[0] + (0 if x is None else x),
                 rect[1] + (0 if y is None else y),
@@ -329,7 +345,7 @@ def AutoPatch(hwnd=None):
     MoveWindow(hwnd=hwnd, sw=6, InsertAfter=-2)
     w.after(100, lambda: MoveWindow(hwnd=hwnd, sw=3))
     clientarea = struct.pack("llll", *((0,) * 4))
-    if ctypes.windll.user32.SystemParametersInfoW(0x30, 0, clientarea, 0):
+    if user32.SystemParametersInfoW(0x30, 0, clientarea, 0):
         clientarea = struct.unpack("llll", clientarea)
         w.after(
             200,
@@ -386,15 +402,18 @@ def DownloadNew(urls, filename, wnd):
             wnd.minsize(Uwidth, 0)
 
     def DownloadCallback(n, d, t):
-        SetStatus(GetText("Download progress")
-                  % (j + 1, i, path, 100 * n * d / t, HSize(n * d), HSize(t)))
+        SetStatus(
+            GetText("Download progress").format(
+                num=j + 1, url=i, path=str(path), percent=100 * n * d / t, downloaded=HSize(n * d), total=HSize(t)
+            )
+        )
 
     for i in urls:
         for j in range(3):
             if j:
-                SetStatus(GetText("Retrying") % (i, j + 1))
+                SetStatus(GetText("Retrying").format(url=i, num=j + 1))
             else:
-                SetStatus(GetText("Download to") % (i, path))
+                SetStatus(GetText("Download to").format(url=i, path=path))
             try:
                 urllib.request.urlretrieve(i, str(path), DownloadCallback)
             except:
@@ -403,9 +422,7 @@ def DownloadNew(urls, filename, wnd):
                 success = True
                 break
         if success:
-            tkinter.messagebox.showinfo(
-                GetText("Download complete"), GetText("Explanation of completion ")
-            )
+            tkinter.messagebox.showinfo(GetText("Download complete"), GetText("Explanation of completion "))
             psutil.Process().terminate()
             return
     SetStatus(GetText("Download failed"))
@@ -414,12 +431,24 @@ def DownloadNew(urls, filename, wnd):
     downloading = False
 
 
-def CheckUpdate(ShowEvenLatest=False):
+def CheckUpdateFromURL(url):
+    if not run:
+        return
     try:
-        res = urllib.request.urlopen("https://carlgao4.github.io/ClassIn-Mover/update.json")
-        NewVersion = json.loads(res.read())
+        res = urllib.request.urlopen(url)
+        return json.loads(res.read())
     except:
-        logging.critical(traceback.format_exc())
+        logging.critical(f"Failed to check update from {url}\n" + traceback.format_exc())
+        return
+
+
+def CheckUpdate(ShowEvenLatest=False):
+    NewVersion = None
+    for i in UpdateURL:
+        NewVersion = CheckUpdateFromURL(i)
+        if NewVersion is not None:
+            break
+    if NewVersion is None:
         if run:
             tkinter.messagebox.showwarning(GetText("Warning"), GetText("NO new version"))
         return
@@ -429,15 +458,14 @@ def CheckUpdate(ShowEvenLatest=False):
         U.resizable(False, False)
         U.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
         U.grab_set()
-        style = ctypes.windll.user32.GetWindowLongW(int(U.frame(), 16), -16)
+        style = user32.GetWindowLongW(int(U.frame(), 16), -16)
         style &= ~0x00020000
-        ctypes.windll.user32.SetWindowLongW(int(U.frame(), 16), -16, style)
+        user32.SetWindowLongW(int(U.frame(), 16), -16, style)
 
         UpdateInfo = tkinter.Label(
             U,
             justify=tkinter.LEFT,
-            text=GetText("Suggested updates")
-                 % (NewVersion["version"], NewVersion["feature"]),
+            text=GetText("Suggested updates").format(version=NewVersion["version"], features=NewVersion["feature"]),
         )
         UpdateInfo.pack(fill=tkinter.X, anchor="nw", padx=(40, 40), pady=(40, 20))
         UF = tkinter.Frame(U)
@@ -455,23 +483,19 @@ def CheckUpdate(ShowEvenLatest=False):
 
         U.focus_force()
     elif ShowEvenLatest:
-        tkinter.messagebox.showinfo(
-            GetText("Check update"), GetText("Updated")
-        )
+        tkinter.messagebox.showinfo(GetText("Check update"), GetText("Updated"))
 
 
-def ShowText(
-        master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12), justify=tkinter.LEFT
-):
+def ShowText(master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12)):
     TL = tkinter.Toplevel(master)
     TL.attributes("-topmost", True)
     TL.resizable(False, False)
     Text = tkinter.Text(TL, width=width, height=height, font=font, wrap="word")
     TL.title(title)
     TL.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
-    style = ctypes.windll.user32.GetWindowLongW(int(TL.frame(), 16), -16)
+    style = user32.GetWindowLongW(int(TL.frame(), 16), -16)
     style &= ~0x00020000
-    ctypes.windll.user32.SetWindowLongW(int(TL.frame(), 16), -16, style)
+    user32.SetWindowLongW(int(TL.frame(), 16), -16, style)
     if showscr:
         scr = tkinter.ttk.Scrollbar(TL, orient=tkinter.VERTICAL)
         scr.config(command=Text.yview)
@@ -505,6 +529,19 @@ if __name__ == "__main__":
     logging.info("Python version: " + sys.version)
     logging.info(platform.platform())
 
+    for i in os.listdir(str(pathlib.Path(__file__).parent / "lang")):
+        if not i.endswith(".json"):
+            continue
+        try:
+            langname = i.rsplit(".", 1)[0]
+            with open(pathlib.Path(__file__).parent / "lang" / i, encoding="utf8", mode="rt") as f:
+                lang_data[langname] = json.loads(f.read())
+            lang_data[langname]["LangName"]
+        except:
+            logging.critical(f"Read file {i} failed\n" + traceback.format_exc())
+            if langname in lang_data:
+                del lang_data[langname]
+
     w = tkinter.Tk()
     w.resizable(False, False)
     w.title("ClassIn Mover v" + __version__ + (GetText(" - without Admin") if NoAdmin else ""))
@@ -513,9 +550,9 @@ if __name__ == "__main__":
     w.protocol("WM_DELETE_WINDOW", SwitchController)
     root_shown = False
 
-    style = ctypes.windll.user32.GetWindowLongW(int(w.frame(), 16), -16)
+    style = user32.GetWindowLongW(int(w.frame(), 16), -16)
     style &= ~0x00020000
-    ctypes.windll.user32.SetWindowLongW(int(w.frame(), 16), -16, style)
+    user32.SetWindowLongW(int(w.frame(), 16), -16, style)
 
     w.withdraw()
 
@@ -533,7 +570,7 @@ if __name__ == "__main__":
     SwitchB = tkinter.ttk.Button(
         w,
         text=GetText("Switch To"),
-        command=lambda: (ctypes.windll.user32.SetForegroundWindow(GetWindow()) if GetWindow() else None),
+        command=lambda: (user32.SetForegroundWindow(GetWindow()) if GetWindow() else None),
     )
     AutoB = tkinter.ttk.Button(w, text=GetText("Auto Patch"), command=AutoPatch)
     DragF = tkinter.LabelFrame(
@@ -600,17 +637,8 @@ if __name__ == "__main__":
     DoAutoPatch = tkinter.BooleanVar(I, value=True)
     im = tkinter.Menu(I, tearoff=False)
     lm = tkinter.Menu(im, tearoff=False)
-    lm.add_command(label="English", command=lambda: SetLang("en-us"))
-    for i in os.listdir(str(pathlib.Path(__file__).parent / "lang")):
-        if not i.endswith(".json"):
-            continue
-        try:
-            langname = i.rsplit(".", 1)[0]
-            with open(pathlib.Path(__file__).parent / "lang" / i, encoding="utf8", mode="rt") as f:
-                lang_data[langname] = json.loads(f.read())
-            lm.add_command(label=lang_data[langname]["LangName"], command=lambda x=langname: SetLang(x))
-        except:
-            logging.critical(traceback.format_exc())
+    for i in lang_data:
+        lm.add_command(label=lang_data[i]["LangName"], command=lambda x=i: SetLang(x))
     im.add_cascade(label="Language", menu=lm)
     im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch)
     im.add_command(
