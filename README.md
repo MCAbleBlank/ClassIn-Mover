@@ -39,3 +39,9 @@ As you may have noticed, the latest version uses Python, which means you can run
 ## Known issues
 
 - **This program calls native API and thus can only work on Windows.**
+
+## Donate
+
+![WeChat](img/wechat.png)
+
+![AliPay](img/alipay.jpg)
