@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.1.1"
+__version__ = "2.1.2"
 
 import base64
 import ctypes
@@ -51,6 +51,7 @@ import shlex4all
 ClassInHwnd = []
 ClassInTitle = []
 ClassInPID = []
+afters = []
 run = True
 NoAdmin = False
 downloading = False
@@ -104,7 +105,7 @@ def SetLang(TargetLang):
     global lang
     lang = TargetLang
     im.delete(1, tkinter.END)
-    im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch)
+    im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch, command=SwitchAutoPatchAll)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
@@ -166,7 +167,7 @@ def GetClassInHwnd():
 
 
 def ScanWindow():
-    global run
+    global run, afters
     last = set()
     count = 0
     while run:
@@ -184,7 +185,7 @@ def ScanWindow():
                     for i in CIHwnd:
                         NewValues.append(GetText("%d (Title=%s PID=%d)").format(pid=i[0], hwnd=i[1], title=i[2]))
                         if (i[1] not in last) and DoAutoPatch.get():
-                            w.after(8500, lambda: AutoPatch(hwnd=i[1]))
+                            afters.append(w.after(8500, lambda: AutoPatch(hwnd=i[1])))
                     WindowSelector.config(values=NewValues)
                     last = NewSet
                     if not WindowSelector.get() in NewValues:
@@ -337,6 +338,14 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
                 1,
             )
+
+
+def SwitchAutoPatchAll():
+    global afters
+    if not DoAutoPatch.get():
+        for i in afters:
+            w.after_cancel(i)
+        afters = []
 
 
 def AutoPatch(hwnd=None):
@@ -640,7 +649,7 @@ if __name__ == "__main__":
     for i in lang_data:
         lm.add_command(label=lang_data[i]["LangName"], command=lambda x=i: SetLang(x))
     im.add_cascade(label="Language", menu=lm)
-    im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch)
+    im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch, command=SwitchAutoPatchAll)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
