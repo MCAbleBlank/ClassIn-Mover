@@ -109,3 +109,13 @@
 - Add alternative update link
 
 - Optimize codes
+
+## 2.1.2 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.2/total)
+
+> Date: 2022/12/12
+
+- Fix bug: window will still be patched if "Auto patch new window" is disabled after a new classroom window is opened and before the 8.5s delay expires
+
+- Add "Blogs" button to view our latest articles
+
+- The settings will be preserved after the program exits
