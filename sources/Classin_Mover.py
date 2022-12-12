@@ -1,5 +1,5 @@
 LICENSE = """ClassIn Mover - A program to move ClassIn classroom window in order to exit from focused learning mode.
-Visit https://carlgao4.github.io/ClassIn-Mover for more information. 
+Visit https://classin-mover.pages.dev for more information. 
 
 Copyright (C) 2020-2022  Weiqi Gao, Jize Guo, Yiming Geng
 
