@@ -53,10 +53,12 @@ ClassInTitle = []
 ClassInPID = []
 afters = []
 run = True
+settings = {}
+reset = False
 NoAdmin = False
 downloading = False
 icon = "c-rllZA=q)9LG^vra)9$9)zMi$wMi9rnIz_KG0Iy0s<wnk%@@wY88-y7~E7~iwFv)NUPDPyx7=YxoM0L!%V<;>I`Itn8mm#V=s)^1mnzNWbC^;X>O&ID|2&M{N`w`$Mt@n`#t@Ccddc0dR73TE=IAjfTyjkH`Z>mS&M6$Z1y^5SBTDDO&rLx*I1psPIjAfi!=3rGqr2Q`}KCGA>gIlJMGS{;O)C>>l>_%jrQGjPIEw0*NReu)@c@)1?|ovZ2;`ezS-VvuXg))<PS_?VWC2yP^nZoIXOzD68mzwTq>1jW@ct&WQar}p-{-@^Lad8dU|?VT3TvqYD!8<Qc_Z4Vq$!Jd|X`Ih7B9muV2q%v7(}))~#C?85tQC7RF#Of`WpWOr{@5v$NUR+4=eTX0zF7G-4+&FHf)6=jP^WwOX}WO(m4cWFVACBx11`kOF}Kgj_C{!{JaNH*VaRkdOe#*w|P=f-Qi&aeB^yU4LQVuK6&@$;qV000XCyFflPP(b3Us*RG}IqS;xJ#AGrp1OxApFbE&jGYFp>hRtS^Fr;TZU`Ww&5#gMCLQ4pfM=p7UiG*Rzi9V0PU|19eS?%E&Hw@J??!@+hq0fVw(i5V>AVz@6%F3GW8ETjo@(iq#F<Jr-tb;_S(`hsszyOc*%zPN+@S<UYbG*XP=YcD<gci*iub%N*O)PJs$ph<ZLVoobkDT!lCVzQg+M_Kmt?9W-o3(&w@}R3I3H|-1=L3d54@`r^-Sm9qjMt_ILs+LmLqi$fgoVss9yAt|5(xtmn4>O^_=Hcqh6(=)2?<%VW)0Tj^78UBLKcgqw6wIOq@=jGxU#Ym9(E(q<bfY#ga8IdO;1lhdGh3ELfF4}@gm{{(;f*7D}d?i>+>;RjE#-q9Cr|D^57Q8xdP5XXb`yhS4IQJ8tsM&4-d!Z^XJcfzzhrwEL*k=vxmR&LWW2PkvW4T0h`rott135k=I89N1gx!!wfv;Vg2dTr@zi=W@hHnrAr<#^m*VDF(G#XBU{MwL72cWF)=|J#S8%d;{+;6cX#*l<;!7fIYp~hty*$_M(v0Qc`a=e5k{BE$w{0!Iy#Cxr^485Hdy!Y11a~I;V%zNd+jssYC=)3UcI`%zaQ?R!l0~R;_W#_L_|<wFtlQ$BGKf5X>u_3(e%(>07iv*`0(L{3l~O4MuvxnuU)%#_wHS+I6xvuqHqhGbX-%21r}dPB$_<%1DDW3O%E5u0O0%4p}D!4ENz@jw6Da%O%)2Ik;CD+k!bS3G)R1m5V&i!xP?d_Ja~ZIBNG_HPvYW}6iU-CkEie5yU*dt;V4`LNHlp6lr%y<COvfiz`($onwl$Dt{^ny<Ku&agD#f~S%>4OK{97zVpz#398K<~XU~3nNjotq$;{;o#Pt1xh@=woJ?Y^FQD`eyu6&CSb`T&mMt2?I1U!dv`HItL`Y&G|y7$BVv9a3&16SKSdKKAuxHFnOFr7k({-o!vuA`!fB+==ODph`Rim0va$U7BQp;)QWm<kFuq1I^fz-|&D`jg&Y>lz6ho66>jGB9#yM@B}#v`8#D(&e=8Y{FoLuQ-^MrHGABqr(H!An|L`qr&|8tQ?<YG;gk~sxz63!o!hGOg>L|l;Dxe75I*WQkkl8Z=2p=S(FD?P9Q{o(sR?|7jbb(Sqj687c=`lZrAHgs8dv{P$W6jer#KHom!(MYB!xPkbT~N{?486v$FGj^N=0GuSw6%!)9~y^2<=#xXu?}o-eUfZr!#ETdAe;tFJHj96wc7UcIHtzGbVupy=Iiu8!ce>({?E7|VR{puNNrq7O626UF6aH0(J@miCPsx4Ms=aJtU+y3TfWpBNpzJv20YwA<x4e%j$U)zRtr?)Lc1%!|n%e=4<XJ=gb{kNP6#KspKR;U83GTs*s~x)#@I+S?{qXmeEB9HmAimbbKZR=j6ZYxGK`My1lGurtn_>wom<kuI;arM2Dn`wh&Te!)=l8I3C;F|DqC--nH@sOt!{r0_6-Ky<jX$F`#p(_J`m1o_<2*;`mt(e}yVMN>K`C<q<cUmhwFUm%r8btZEGOf#7bK3~}0;Q)^U^~GdjIYx%-4P_l2$7sF+!b*Y8AF?C`2M044p;#<nS0uvILAF3BJ=oHLc&XGnsZ1f2%KUg=_v+psI-R|0ZP5oins(JT4-5{S>+9cDyRU5X_J+p&uj|#Q!*SBSa}PoHJN~8~Kem)rIeJ{L@onu#`#;6XH8nMbDHm(~;tBlEZ~G4%vh8Rvn#)^S5B*2pY4;pIdGqG2H}CfUf1A@<&HDox^xKy"
-lang = locale.getdefaultlocale()[0].lower().replace("_", "-")
+lang = "en-us"
 lang_data = {}
 user32 = ctypes.windll.user32
 UpdateURL = [
@@ -104,6 +106,7 @@ def GetText(t):
 def SetLang(TargetLang):
     global lang
     lang = TargetLang
+    SetSetting("lang", lang)
     im.delete(1, tkinter.END)
     im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch, command=SwitchAutoPatchAll)
     im.add_command(
@@ -124,7 +127,9 @@ def SetLang(TargetLang):
     DragF.config(text=GetText("Move"))
     MoveF.config(text=GetText("Resize"))
     UsageB.config(text=GetText("Usage"))
+    BlogB.config(text=GetText("Blogs"))
     WebsiteB.config(text=GetText("Website"))
+    ResetB.config(text=GetText("Reset"))
     AboutB.config(text=GetText("About..."))
     ExitB.config(text=GetText("Exit"))
 
@@ -342,10 +347,11 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
 
 def SwitchAutoPatchAll():
     global afters
-    if not DoAutoPatch.get():
+    if not (a := DoAutoPatch.get()):
         for i in afters:
             w.after_cancel(i)
         afters = []
+    SetSetting("autopatchnew", a)
 
 
 def AutoPatch(hwnd=None):
@@ -432,7 +438,7 @@ def DownloadNew(urls, filename, wnd):
                 break
         if success:
             tkinter.messagebox.showinfo(GetText("Download complete"), GetText("Explanation of completion "))
-            psutil.Process().terminate()
+            w.destroy()
             return
     SetStatus(GetText("Download failed"))
     tkinter.messagebox.showerror(GetText("Download failed"), GetText("New version failed"))
@@ -495,6 +501,30 @@ def CheckUpdate(ShowEvenLatest=False):
         tkinter.messagebox.showinfo(GetText("Check update"), GetText("Updated"))
 
 
+def GetSetting(attr, default=None, autoset=True):
+    global settings
+    if attr in settings:
+        return settings[attr]
+    else:
+        if autoset:
+            SetSetting(attr, default)
+        return default
+
+
+def SetSetting(attr, value):
+    global settings, SettingsFile
+    settings[attr] = value
+    with open(str(SettingsFile), mode="wt", encoding="utf8") as f:
+        f.write(json.dumps(settings, separators=(",", ":")))
+
+
+def ResetSettings():
+    if tkinter.messagebox.askokcancel(GetText("Reset settings"), GetText("Reset settings description")):
+        global reset
+        reset = True
+        w.destroy()
+
+
 def ShowText(master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12)):
     TL = tkinter.Toplevel(master)
     TL.attributes("-topmost", True)
@@ -533,6 +563,20 @@ if __name__ == "__main__":
         datefmt="%Y-%m-%d %H:%M:%S",
         handlers=(logging.StreamHandler(log),),
     )
+
+    SettingsFile = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "settings.json"
+    if SettingsFile.exists():
+        try:
+            with open(str(SettingsFile), mode="rt", encoding="utf8") as f:
+                settings = json.loads(f.read())
+            if type(settings) != dict:
+                raise TypeError
+        except:
+            settings = {}
+    else:
+        settings = {}
+
+    lang = GetSetting("lang", locale.getdefaultlocale()[0].lower().replace("_", "-"))
 
     logging.info("ClassIn Mover version: " + __version__)
     logging.info("Python version: " + sys.version)
@@ -589,7 +633,7 @@ if __name__ == "__main__":
         bd=0,
         bg="#cccccc",
         labelanchor="n",
-        text=GetText("Drag to move ClassIn window\nDouble click: move to center"),
+        text=GetText("Move"),
     )
     MoveF = tkinter.LabelFrame(
         w,
@@ -605,11 +649,17 @@ if __name__ == "__main__":
         text=GetText("Usage"),
         command=lambda: webbrowser.open("https://classin-mover.pages.dev/usage?version=" + __version__),
     )
+    BlogB = tkinter.ttk.Button(
+        w,
+        text=GetText("Blogs"),
+        command=lambda: webbrowser.open("https://classin-mover.pages.dev/blogs?version=" + __version__),
+    )
     WebsiteB = tkinter.ttk.Button(
         w,
         text=GetText("Website"),
         command=lambda: webbrowser.open("https://classin-mover.pages.dev/app?version=" + __version__),
     )
+    ResetB = tkinter.ttk.Button(w, text=GetText("Reset"), command=ResetSettings)
     AboutB = tkinter.ttk.Button(
         w,
         text=GetText("About..."),
@@ -626,12 +676,14 @@ if __name__ == "__main__":
     NoTopB.grid(row=2, column=1, padx=(5, 5), pady=(5, 5))
     SwitchB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
     AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
-    DragF.grid(row=3, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
-    MoveF.grid(row=3, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
-    UsageB.grid(row=4, column=0, padx=(20, 5), pady=(5, 20))
-    WebsiteB.grid(row=4, column=1, padx=(5, 5), pady=(5, 20))
-    AboutB.grid(row=4, column=2, padx=(5, 5), pady=(5, 20))
-    ExitB.grid(row=4, column=3, padx=(5, 20), pady=(5, 20))
+    DragF.grid(row=4, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
+    MoveF.grid(row=4, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
+    UsageB.grid(row=5, column=1, padx=(5, 5), pady=(5, 5))
+    BlogB.grid(row=5, column=2, padx=(5, 5), pady=(5, 5))
+    WebsiteB.grid(row=5, column=3, padx=(5, 20), pady=(5, 5))
+    ResetB.grid(row=6, column=1, padx=(5, 5), pady=(5, 20))
+    AboutB.grid(row=6, column=2, padx=(5, 5), pady=(5, 20))
+    ExitB.grid(row=6, column=3, padx=(5, 20), pady=(5, 20))
 
     DragF.bind("<ButtonPress-1>", MouseDownM)
     DragF.bind("<B1-Motion>", MouseMoveM)
@@ -643,7 +695,7 @@ if __name__ == "__main__":
     I.overrideredirect(True)
     I.geometry("48x48+96+96")
     I.resizable(False, False)
-    DoAutoPatch = tkinter.BooleanVar(I, value=True)
+    DoAutoPatch = tkinter.BooleanVar(I, value=GetSetting("autopatchnew", True))
     im = tkinter.Menu(I, tearoff=False)
     lm = tkinter.Menu(im, tearoff=False)
     for i in lang_data:
@@ -672,8 +724,6 @@ if __name__ == "__main__":
     I.bind("<ButtonRelease-1>", MouseUpI)
     I.bind("<Button-3>", lambda e: im.tk_popup(e.x_root, e.y_root))
 
-    SetLang(locale.getdefaultlocale()[0].lower().replace("_", "-"))
-
     ScanThread = threading.Thread(target=ScanWindow)
     ScanThread.start()
 
@@ -682,4 +732,6 @@ if __name__ == "__main__":
 
     w.mainloop()
     run = False
+    if reset:
+        os.remove(str(SettingsFile))
     sys.exit(0)
