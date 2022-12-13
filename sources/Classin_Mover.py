@@ -473,6 +473,7 @@ def CheckUpdate(ShowEvenLatest=False):
         U.resizable(False, False)
         U.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
         U.grab_set()
+        U.protocol("WM_DELETE_WINDOW", lambda: None)
         style = user32.GetWindowLongW(int(U.frame(), 16), -16)
         style &= ~0x00020000
         user32.SetWindowLongW(int(U.frame(), 16), -16, style)
