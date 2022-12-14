@@ -119,3 +119,13 @@
 - Add "Blogs" button to view our latest articles
 
 - The settings will be preserved after the program exits
+
+## 2.1.3 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.1.3/total)
+
+> Date: 2022/12/14
+
+- Posts on the main window
+
+- See latest blog list
+
+- Arguments for debugging
