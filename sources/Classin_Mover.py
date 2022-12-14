@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.1.2"
+__version__ = "2.1.3"
 
 import base64
 import ctypes
@@ -55,6 +55,7 @@ afters = []
 run = True
 settings = {}
 reset = False
+blogs = {}
 NoAdmin = False
 downloading = False
 icon = "c-rllZA=q)9LG^vra)9$9)zMi$wMi9rnIz_KG0Iy0s<wnk%@@wY88-y7~E7~iwFv)NUPDPyx7=YxoM0L!%V<;>I`Itn8mm#V=s)^1mnzNWbC^;X>O&ID|2&M{N`w`$Mt@n`#t@Ccddc0dR73TE=IAjfTyjkH`Z>mS&M6$Z1y^5SBTDDO&rLx*I1psPIjAfi!=3rGqr2Q`}KCGA>gIlJMGS{;O)C>>l>_%jrQGjPIEw0*NReu)@c@)1?|ovZ2;`ezS-VvuXg))<PS_?VWC2yP^nZoIXOzD68mzwTq>1jW@ct&WQar}p-{-@^Lad8dU|?VT3TvqYD!8<Qc_Z4Vq$!Jd|X`Ih7B9muV2q%v7(}))~#C?85tQC7RF#Of`WpWOr{@5v$NUR+4=eTX0zF7G-4+&FHf)6=jP^WwOX}WO(m4cWFVACBx11`kOF}Kgj_C{!{JaNH*VaRkdOe#*w|P=f-Qi&aeB^yU4LQVuK6&@$;qV000XCyFflPP(b3Us*RG}IqS;xJ#AGrp1OxApFbE&jGYFp>hRtS^Fr;TZU`Ww&5#gMCLQ4pfM=p7UiG*Rzi9V0PU|19eS?%E&Hw@J??!@+hq0fVw(i5V>AVz@6%F3GW8ETjo@(iq#F<Jr-tb;_S(`hsszyOc*%zPN+@S<UYbG*XP=YcD<gci*iub%N*O)PJs$ph<ZLVoobkDT!lCVzQg+M_Kmt?9W-o3(&w@}R3I3H|-1=L3d54@`r^-Sm9qjMt_ILs+LmLqi$fgoVss9yAt|5(xtmn4>O^_=Hcqh6(=)2?<%VW)0Tj^78UBLKcgqw6wIOq@=jGxU#Ym9(E(q<bfY#ga8IdO;1lhdGh3ELfF4}@gm{{(;f*7D}d?i>+>;RjE#-q9Cr|D^57Q8xdP5XXb`yhS4IQJ8tsM&4-d!Z^XJcfzzhrwEL*k=vxmR&LWW2PkvW4T0h`rott135k=I89N1gx!!wfv;Vg2dTr@zi=W@hHnrAr<#^m*VDF(G#XBU{MwL72cWF)=|J#S8%d;{+;6cX#*l<;!7fIYp~hty*$_M(v0Qc`a=e5k{BE$w{0!Iy#Cxr^485Hdy!Y11a~I;V%zNd+jssYC=)3UcI`%zaQ?R!l0~R;_W#_L_|<wFtlQ$BGKf5X>u_3(e%(>07iv*`0(L{3l~O4MuvxnuU)%#_wHS+I6xvuqHqhGbX-%21r}dPB$_<%1DDW3O%E5u0O0%4p}D!4ENz@jw6Da%O%)2Ik;CD+k!bS3G)R1m5V&i!xP?d_Ja~ZIBNG_HPvYW}6iU-CkEie5yU*dt;V4`LNHlp6lr%y<COvfiz`($onwl$Dt{^ny<Ku&agD#f~S%>4OK{97zVpz#398K<~XU~3nNjotq$;{;o#Pt1xh@=woJ?Y^FQD`eyu6&CSb`T&mMt2?I1U!dv`HItL`Y&G|y7$BVv9a3&16SKSdKKAuxHFnOFr7k({-o!vuA`!fB+==ODph`Rim0va$U7BQp;)QWm<kFuq1I^fz-|&D`jg&Y>lz6ho66>jGB9#yM@B}#v`8#D(&e=8Y{FoLuQ-^MrHGABqr(H!An|L`qr&|8tQ?<YG;gk~sxz63!o!hGOg>L|l;Dxe75I*WQkkl8Z=2p=S(FD?P9Q{o(sR?|7jbb(Sqj687c=`lZrAHgs8dv{P$W6jer#KHom!(MYB!xPkbT~N{?486v$FGj^N=0GuSw6%!)9~y^2<=#xXu?}o-eUfZr!#ETdAe;tFJHj96wc7UcIHtzGbVupy=Iiu8!ce>({?E7|VR{puNNrq7O626UF6aH0(J@miCPsx4Ms=aJtU+y3TfWpBNpzJv20YwA<x4e%j$U)zRtr?)Lc1%!|n%e=4<XJ=gb{kNP6#KspKR;U83GTs*s~x)#@I+S?{qXmeEB9HmAimbbKZR=j6ZYxGK`My1lGurtn_>wom<kuI;arM2Dn`wh&Te!)=l8I3C;F|DqC--nH@sOt!{r0_6-Ky<jX$F`#p(_J`m1o_<2*;`mt(e}yVMN>K`C<q<cUmhwFUm%r8btZEGOf#7bK3~}0;Q)^U^~GdjIYx%-4P_l2$7sF+!b*Y8AF?C`2M044p;#<nS0uvILAF3BJ=oHLc&XGnsZ1f2%KUg=_v+psI-R|0ZP5oins(JT4-5{S>+9cDyRU5X_J+p&uj|#Q!*SBSa}PoHJN~8~Kem)rIeJ{L@onu#`#;6XH8nMbDHm(~;tBlEZ~G4%vh8Rvn#)^S5B*2pY4;pIdGqG2H}CfUf1A@<&HDox^xKy"
@@ -78,17 +79,18 @@ def has_admin():
 
 
 if __name__ == "__main__" and not has_admin()[1]:
-    p = psutil.Process().cmdline()
-    res = ctypes.windll.shell32.ShellExecuteW(
-        0,
-        ctypes.create_unicode_buffer("runas"),
-        ctypes.create_unicode_buffer(p[0]),
-        ctypes.create_unicode_buffer(shlex4all.join(p[1:])),
-        0,
-        5,
-    )
-    if res > 32:
-        raise SystemExit
+    if "--no-admin" not in sys.argv:
+        p = psutil.Process().cmdline()
+        res = ctypes.windll.shell32.ShellExecuteW(
+            0,
+            ctypes.create_unicode_buffer("runas"),
+            ctypes.create_unicode_buffer(p[0]),
+            ctypes.create_unicode_buffer(shlex4all.join(p[1:])),
+            0,
+            5,
+        )
+        if res > 32:
+            raise SystemExit
     NoAdmin = True
 
 
@@ -116,6 +118,7 @@ def SetLang(TargetLang):
     im.add_command(label=GetText("Check updates"), command=StartCheckUpdate)
     im.add_command(label=GetText("Exit"), command=w.destroy)
 
+    w.after(100, RefreshPost)
     MinimizeB.config(text=GetText("Minimize"))
     MaximizeB.config(text=GetText("Maximize"))
     NormalB.config(text=GetText("Normalize"))
@@ -124,6 +127,7 @@ def SetLang(TargetLang):
     NoTopB.config(text=GetText("Cancel Top"))
     SwitchB.config(text=GetText("Switch To"))
     AutoB.config(text=GetText("Auto Patch"))
+    WatermarkB.config(text=GetText("Remove Watermark"))
     DragF.config(text=GetText("Move"))
     MoveF.config(text=GetText("Resize"))
     UsageB.config(text=GetText("Usage"))
@@ -270,6 +274,7 @@ def SwitchController():
             place += f"+{I.winfo_rooty() - w.winfo_height()}"
         w.geometry(place)
         w.deiconify()
+        w.after(100, RefreshPost)
         root_shown = True
 
 
@@ -374,6 +379,16 @@ def AutoPatch(hwnd=None):
         )
 
 
+def RemoveWatermark():
+    if not (pathlib.Path(__file__).parent / "Watermark_Remover.exe").exists():
+        webbrowser.open("https://classin-mover.pages.dev/blogs/evaluate-remove-watermark")
+        return
+    tkinter.messagebox.showerror(
+        "Evaluate version required",
+        "This function hasn't been released yet. You need to use evaluate version to use it. ",
+    )
+
+
 def StartCheckUpdate():
     global UpdateThread
     if not UpdateThread.is_alive():
@@ -458,6 +473,7 @@ def CheckUpdateFromURL(url):
 
 
 def CheckUpdate(ShowEvenLatest=False):
+    global blogs, lang_data
     NewVersion = None
     for i in UpdateURL:
         NewVersion = CheckUpdateFromURL(i)
@@ -467,6 +483,15 @@ def CheckUpdate(ShowEvenLatest=False):
         if run:
             tkinter.messagebox.showwarning(GetText("Warning"), GetText("NO new version"))
         return
+    blogs = NewVersion["blogs"]
+    if "post" in NewVersion:
+        for key, value in NewVersion["post"].items():
+            if key in lang_data:
+                lang_data[key]["post"] = value
+            else:
+                lang_data[key] = {"post": value}
+        WindowSelector.grid_configure(pady=(10, 5))
+        w.after(100, RefreshPost)
     if NewVersion["version"] > __version__:
         U = tkinter.Toplevel(w)
         U.title(GetText("New version detected"))
@@ -500,6 +525,15 @@ def CheckUpdate(ShowEvenLatest=False):
         U.focus_force()
     elif ShowEvenLatest:
         tkinter.messagebox.showinfo(GetText("Check update"), GetText("Updated"))
+    elif len(blogs) != 0:
+        NewBlog = False
+        ViewedBlog = GetSetting("viewedblog", [])
+        for i in blogs:
+            if i not in ViewedBlog:
+                NewBlog = True
+                break
+        if NewBlog:
+            OpenBlogs()
 
 
 def GetSetting(attr, default=None, autoset=True):
@@ -526,13 +560,45 @@ def ResetSettings():
         w.destroy()
 
 
-def ShowText(master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12)):
+def RefreshPost():
+    Post.config(text=GetText("post"), wraplength=w.winfo_width() - 40)
+    Post.grid(row=0, column=0, columnspan=4, padx=(20, 20), pady=(10, 0), sticky="w")
+
+
+def ViewBlog(blog):
+    global blogs
+    SetSetting("viewedblog", list(set(GetSetting("viewedblog", [], False) + [blog])))
+    webbrowser.open(blogs[blog]["url"] + "?version=" + __version__)
+
+
+def OpenBlogs():
+    global blogs
+    if len(blogs) == 0:
+        webbrowser.open("https://classin-mover.pages.dev/blogs?version=" + __version__)
+        return
+    _, BT, _ = ShowText(w, text="\n".join(blogs[i]["title"] for i in blogs), title=GetText("Blogs"), model=False, font=("微软雅黑", 14), width=60, height=9, spacing1=8, spacing2=2, background="#fcffff", selectbackground="#add6ff")
+    ViewedBlog = GetSetting("viewedblog", [])
+    for i, blogid in enumerate(blogs):
+        tag = "blog%d" % i
+        BT.tag_add(tag, "%d.0" % (i + 1), "%d.end" % (i + 1))
+        BT.tag_config(tag, underline=True, lmargin1=8, lmargin2=8)
+        if blogid in ViewedBlog:
+            BT.tag_config(tag, foreground="purple")
+        else:
+            BT.tag_config(tag, foreground="blue")
+        BT.tag_bind(tag, "<Enter>", lambda _: BT.config(cursor="hand2"), "+")
+        BT.tag_bind(tag, "<Leave>", lambda _: BT.config(cursor="xterm"), "+")
+        BT.tag_bind(tag, "<Button-1>", lambda _, blogid=blogid: ViewBlog(blogid), "+")
+
+
+def ShowText(master, text="", title="", showscr=True, model=True, width=80, height=15, font=("", 12), **kw):
     TL = tkinter.Toplevel(master)
     TL.attributes("-topmost", True)
     TL.resizable(False, False)
-    Text = tkinter.Text(TL, width=width, height=height, font=font, wrap="word")
+    Text = tkinter.Text(TL, width=width, height=height, font=font, wrap="word", **kw)
     TL.title(title)
     TL.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
+    TL.bind("<Escape>", lambda _: TL.destroy())
     style = user32.GetWindowLongW(int(TL.frame(), 16), -16)
     style &= ~0x00020000
     user32.SetWindowLongW(int(TL.frame(), 16), -16, style)
@@ -547,17 +613,21 @@ def ShowText(master, text="", title="", showscr=True, model=True, width=80, heig
     TL.focus_set()
     if model:
         TL.grab_set()
+    return TL, Text, scr
 
 
 if __name__ == "__main__":
-    LogFolder = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "log"
-    LogFolder.mkdir(parents=True, exist_ok=True)
-    log = open(
-        str(LogFolder / datetime.datetime.now().strftime("ClassIn-Mover-Log-%Y%m%d-%H%M%S.log")),
-        mode="wt",
-        encoding="utf8",
-    )
-    sys.stderr = log
+    if not "--stderr-log" in sys.argv:
+        LogFolder = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "log"
+        LogFolder.mkdir(parents=True, exist_ok=True)
+        log = open(
+            str(LogFolder / datetime.datetime.now().strftime("ClassIn-Mover-Log-%Y%m%d-%H%M%S.log")),
+            mode="wt",
+            encoding="utf8",
+        )
+        sys.stderr = log
+    else:
+        log = sys.stderr
     logging.basicConfig(
         format="[%(asctime)s] %(levelname)s (%(funcName)s %(lineno)d) %(message)s",
         level=logging.DEBUG,
@@ -610,6 +680,7 @@ if __name__ == "__main__":
 
     w.withdraw()
 
+    Post = tkinter.ttk.Label(w)
     WindowSelector = tkinter.ttk.Combobox(w, width=56, state="readonly")
     MinimizeB = tkinter.ttk.Button(w, text=GetText("Minimize"), command=lambda: MoveWindow(sw=6))
     MaximizeB = tkinter.ttk.Button(w, text=GetText("Maximize"), command=lambda: MoveWindow(sw=3))
@@ -627,6 +698,7 @@ if __name__ == "__main__":
         command=lambda: (user32.SetForegroundWindow(GetWindow()) if GetWindow() else None),
     )
     AutoB = tkinter.ttk.Button(w, text=GetText("Auto Patch"), command=AutoPatch)
+    WatermarkB = tkinter.ttk.Button(w, text=GetText("Remove Watermark"), command=RemoveWatermark)
     DragF = tkinter.LabelFrame(
         w,
         width=192,
@@ -650,11 +722,7 @@ if __name__ == "__main__":
         text=GetText("Usage"),
         command=lambda: webbrowser.open("https://classin-mover.pages.dev/usage?version=" + __version__),
     )
-    BlogB = tkinter.ttk.Button(
-        w,
-        text=GetText("Blogs"),
-        command=lambda: webbrowser.open("https://classin-mover.pages.dev/blogs?version=" + __version__),
-    )
+    BlogB = tkinter.ttk.Button(w, text=GetText("Blogs"), command=OpenBlogs)
     WebsiteB = tkinter.ttk.Button(
         w,
         text=GetText("Website"),
@@ -668,23 +736,24 @@ if __name__ == "__main__":
     )
     ExitB = tkinter.ttk.Button(w, text=GetText("Exit"), command=w.destroy)
 
-    WindowSelector.grid(row=0, column=0, columnspan=4, padx=(20, 20), pady=(20, 5))
-    MinimizeB.grid(row=1, column=0, padx=(20, 5), pady=(5, 5))
-    MaximizeB.grid(row=1, column=1, padx=(5, 5), pady=(5, 5))
-    NormalB.grid(row=1, column=2, padx=(5, 5), pady=(5, 5))
-    FullB.grid(row=1, column=3, padx=(5, 20), pady=(5, 5))
-    TopB.grid(row=2, column=0, padx=(20, 5), pady=(5, 5))
-    NoTopB.grid(row=2, column=1, padx=(5, 5), pady=(5, 5))
-    SwitchB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
-    AutoB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
-    DragF.grid(row=4, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
-    MoveF.grid(row=4, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
-    UsageB.grid(row=5, column=1, padx=(5, 5), pady=(5, 5))
-    BlogB.grid(row=5, column=2, padx=(5, 5), pady=(5, 5))
-    WebsiteB.grid(row=5, column=3, padx=(5, 20), pady=(5, 5))
-    ResetB.grid(row=6, column=1, padx=(5, 5), pady=(5, 20))
-    AboutB.grid(row=6, column=2, padx=(5, 5), pady=(5, 20))
-    ExitB.grid(row=6, column=3, padx=(5, 20), pady=(5, 20))
+    WindowSelector.grid(row=1, column=0, columnspan=4, padx=(20, 20), pady=(20, 5))
+    MinimizeB.grid(row=2, column=0, padx=(20, 5), pady=(5, 5))
+    MaximizeB.grid(row=2, column=1, padx=(5, 5), pady=(5, 5))
+    NormalB.grid(row=2, column=2, padx=(5, 5), pady=(5, 5))
+    FullB.grid(row=2, column=3, padx=(5, 20), pady=(5, 5))
+    TopB.grid(row=3, column=0, padx=(20, 5), pady=(5, 5))
+    NoTopB.grid(row=3, column=1, padx=(5, 5), pady=(5, 5))
+    SwitchB.grid(row=3, column=2, padx=(5, 5), pady=(5, 5))
+    AutoB.grid(row=3, column=3, padx=(5, 20), pady=(5, 5))
+    WatermarkB.grid(row=4, column=0, columnspan=4, padx=(20, 20), pady=(5, 5))
+    DragF.grid(row=5, column=0, columnspan=2, padx=(20, 5), pady=(5, 5))
+    MoveF.grid(row=5, column=2, columnspan=2, padx=(5, 20), pady=(5, 5))
+    UsageB.grid(row=6, column=1, padx=(5, 5), pady=(5, 5))
+    BlogB.grid(row=6, column=2, padx=(5, 5), pady=(5, 5))
+    WebsiteB.grid(row=6, column=3, padx=(5, 20), pady=(5, 5))
+    ResetB.grid(row=7, column=1, padx=(5, 5), pady=(5, 20))
+    AboutB.grid(row=7, column=2, padx=(5, 5), pady=(5, 20))
+    ExitB.grid(row=7, column=3, padx=(5, 20), pady=(5, 20))
 
     DragF.bind("<ButtonPress-1>", MouseDownM)
     DragF.bind("<B1-Motion>", MouseMoveM)
