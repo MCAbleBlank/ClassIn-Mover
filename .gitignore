@@ -2,3 +2,7 @@
 __pycache__
 *.pyc
 .idea
+*beta*
+*.exe
+Remove_Watermark.py
+msi_installed.conf

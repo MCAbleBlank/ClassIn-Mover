@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.1.3"
+__version__ = "2.2.0"
 
 import base64
 import ctypes
@@ -24,11 +24,13 @@ import datetime
 import json
 import locale
 import logging
+import lzma
 import math
 import os
 import pathlib
 import pickle
 import platform
+import re
 import struct
 import sys
 import threading
@@ -41,11 +43,12 @@ import traceback
 import urllib
 import urllib.request
 import webbrowser
-import zlib
 
 import PIL.ImageTk
 import psutil
 
+import onstage_notify
+import shared
 import shlex4all
 
 ClassInHwnd = []
@@ -58,7 +61,7 @@ reset = False
 blogs = {}
 NoAdmin = False
 downloading = False
-icon = "c-rllZA=q)9LG^vra)9$9)zMi$wMi9rnIz_KG0Iy0s<wnk%@@wY88-y7~E7~iwFv)NUPDPyx7=YxoM0L!%V<;>I`Itn8mm#V=s)^1mnzNWbC^;X>O&ID|2&M{N`w`$Mt@n`#t@Ccddc0dR73TE=IAjfTyjkH`Z>mS&M6$Z1y^5SBTDDO&rLx*I1psPIjAfi!=3rGqr2Q`}KCGA>gIlJMGS{;O)C>>l>_%jrQGjPIEw0*NReu)@c@)1?|ovZ2;`ezS-VvuXg))<PS_?VWC2yP^nZoIXOzD68mzwTq>1jW@ct&WQar}p-{-@^Lad8dU|?VT3TvqYD!8<Qc_Z4Vq$!Jd|X`Ih7B9muV2q%v7(}))~#C?85tQC7RF#Of`WpWOr{@5v$NUR+4=eTX0zF7G-4+&FHf)6=jP^WwOX}WO(m4cWFVACBx11`kOF}Kgj_C{!{JaNH*VaRkdOe#*w|P=f-Qi&aeB^yU4LQVuK6&@$;qV000XCyFflPP(b3Us*RG}IqS;xJ#AGrp1OxApFbE&jGYFp>hRtS^Fr;TZU`Ww&5#gMCLQ4pfM=p7UiG*Rzi9V0PU|19eS?%E&Hw@J??!@+hq0fVw(i5V>AVz@6%F3GW8ETjo@(iq#F<Jr-tb;_S(`hsszyOc*%zPN+@S<UYbG*XP=YcD<gci*iub%N*O)PJs$ph<ZLVoobkDT!lCVzQg+M_Kmt?9W-o3(&w@}R3I3H|-1=L3d54@`r^-Sm9qjMt_ILs+LmLqi$fgoVss9yAt|5(xtmn4>O^_=Hcqh6(=)2?<%VW)0Tj^78UBLKcgqw6wIOq@=jGxU#Ym9(E(q<bfY#ga8IdO;1lhdGh3ELfF4}@gm{{(;f*7D}d?i>+>;RjE#-q9Cr|D^57Q8xdP5XXb`yhS4IQJ8tsM&4-d!Z^XJcfzzhrwEL*k=vxmR&LWW2PkvW4T0h`rott135k=I89N1gx!!wfv;Vg2dTr@zi=W@hHnrAr<#^m*VDF(G#XBU{MwL72cWF)=|J#S8%d;{+;6cX#*l<;!7fIYp~hty*$_M(v0Qc`a=e5k{BE$w{0!Iy#Cxr^485Hdy!Y11a~I;V%zNd+jssYC=)3UcI`%zaQ?R!l0~R;_W#_L_|<wFtlQ$BGKf5X>u_3(e%(>07iv*`0(L{3l~O4MuvxnuU)%#_wHS+I6xvuqHqhGbX-%21r}dPB$_<%1DDW3O%E5u0O0%4p}D!4ENz@jw6Da%O%)2Ik;CD+k!bS3G)R1m5V&i!xP?d_Ja~ZIBNG_HPvYW}6iU-CkEie5yU*dt;V4`LNHlp6lr%y<COvfiz`($onwl$Dt{^ny<Ku&agD#f~S%>4OK{97zVpz#398K<~XU~3nNjotq$;{;o#Pt1xh@=woJ?Y^FQD`eyu6&CSb`T&mMt2?I1U!dv`HItL`Y&G|y7$BVv9a3&16SKSdKKAuxHFnOFr7k({-o!vuA`!fB+==ODph`Rim0va$U7BQp;)QWm<kFuq1I^fz-|&D`jg&Y>lz6ho66>jGB9#yM@B}#v`8#D(&e=8Y{FoLuQ-^MrHGABqr(H!An|L`qr&|8tQ?<YG;gk~sxz63!o!hGOg>L|l;Dxe75I*WQkkl8Z=2p=S(FD?P9Q{o(sR?|7jbb(Sqj687c=`lZrAHgs8dv{P$W6jer#KHom!(MYB!xPkbT~N{?486v$FGj^N=0GuSw6%!)9~y^2<=#xXu?}o-eUfZr!#ETdAe;tFJHj96wc7UcIHtzGbVupy=Iiu8!ce>({?E7|VR{puNNrq7O626UF6aH0(J@miCPsx4Ms=aJtU+y3TfWpBNpzJv20YwA<x4e%j$U)zRtr?)Lc1%!|n%e=4<XJ=gb{kNP6#KspKR;U83GTs*s~x)#@I+S?{qXmeEB9HmAimbbKZR=j6ZYxGK`My1lGurtn_>wom<kuI;arM2Dn`wh&Te!)=l8I3C;F|DqC--nH@sOt!{r0_6-Ky<jX$F`#p(_J`m1o_<2*;`mt(e}yVMN>K`C<q<cUmhwFUm%r8btZEGOf#7bK3~}0;Q)^U^~GdjIYx%-4P_l2$7sF+!b*Y8AF?C`2M044p;#<nS0uvILAF3BJ=oHLc&XGnsZ1f2%KUg=_v+psI-R|0ZP5oins(JT4-5{S>+9cDyRU5X_J+p&uj|#Q!*SBSa}PoHJN~8~Kem)rIeJ{L@onu#`#;6XH8nMbDHm(~;tBlEZ~G4%vh8Rvn#)^S5B*2pY4;pIdGqG2H}CfUf1A@<&HDox^xKy"
+icon = "{Wp48S^xk9=GL@E0stWa8~^|S5YJf5;2U}bTwMS_0S<J)6G#OOiPpNM;*@Fj1BWIuCwWQy0mm_9O|kqdhwb(tj#Qr*3vsgDuvI(Ee6R+Api2XKpWV((sGFN%%b?5rcv_twUzDpR9?A0&+{;KR`GDmVu!~IoRpi#1^r^*bP=x>utk(&RFR4j{%+q=&AcwOj?0q6bMGbl!Im1>XaLNxyId|i*No_P%Hjd=6m_wVLX7N_*0e}8#y_@f{zg0_I^e%wPYX9Loz?FOUjo{Gl#$cV6DH68Ek#L~*&6@mvT;R-e{~rKeV4rnWA^?un$vE4EQw;h4XYhRiHK#C17<*;VXkbH30?evIrh@?ion41=%ZabgE-Apfu&17U{*H6`i^(5OV6G+8y_03C4Ftw{>aIhVwx)24=>h;6vZ-Fvho~j#{mRf(#(5emAFPH%`iN}4s3)A2mf@u7T<kyj(D{PsdF*+qTPqUo94t|70bv5x;M}{*(@}Bb4@2%cWFp`wCO48|Z{&@X6R?&23<(X)Pa72obcpH1Jcm#NuO2U<$J$mJc?~6A!28-gMVOl75?ZSyfNM(N+eSu16t$)A+|-SXr|mfALT&U%cEA$sZ(Pvz>DcENepc5~GqK$loH`CHXJo4d!LtJVKA~W3Bsi98W8MW<Fin|E_~f-tE%y-fzzO2lZ0>Jeu2d-!kYi0qZ!<u0%T+1<{x(v54(33JX6yV>?@v$Fo-##|Ew`5=WIOLAt9|gVJOjPmVG<HKV#$C;V{9J3Me(E$X1~It<VJj5+q8Dk0%{?Zcr{XL6QG12Rd+ppTsAp0;bbg@0yX_@4au;B*wF*(UHC$J?`>dnD1`h9y#1N_)kTxSTr0M+ANGAA)blJO<SWWz&c;J+uEmLh3bC(3sf%tX!bDnY+Icu?>D2@XyoEc>G<f%t?4GwH9uP&hx+B81a~OW35HV1BfgKoao`0l6@_dZ0ot7$vraGq4GcxJE<0Eut=ZLvMkr_HF{^4Xubh~nX3ik#rFO<BK&&dkC2VWI1f}3&Sh?U})A{Euh1432OgVj*1dC?rPV3O>3B78iIJZ<B4^ct=K)xX53YiMUuHq?BMx1oIOKhhUih=K^|6-yNs%CeU$e2%;!N^&b?098M3lv{J{1B@IRao6ljs6^*gM@;8FsU1Kp*SGX7EQtySHC6_po5}9JLmo<VV=PM2|HhOagZ!!wki83{*l4kQ#DCRM3>3Z<M?6x*mvOdN50%(}X<;NPiKo!$^Ou~_x<Fb)IL#YE5UXq%DdFb}253a}af+bIdUXneo~B5Y?-QSmaBLfw%q`GKE?>S3GeS;tO=vME|FMHD(Mf46xDBisY{1_RR?_d6*n5FND;N^ZG_+5*h>;@%2(Wa=@-}!j$?pqZ{(~th$4CAxAGsf_lqn;5Y<%Ko^5TYTbkDhlk}RE!x9IN~{&O1?Vl}uFmbZ%cA!!nFPP+gAQ1lLD$KF1F00H<2`!)ao><ndlvBYQl0ssI200dcD"
 lang = "en-us"
 lang_data = {}
 user32 = ctypes.windll.user32
@@ -78,10 +81,10 @@ def has_admin():
         return os.environ["USERNAME"], True
 
 
-if __name__ == "__main__" and not has_admin()[1]:
-    if "--no-admin" not in sys.argv:
-        p = psutil.Process().cmdline()
-        res = ctypes.windll.shell32.ShellExecuteW(
+def RestartAsAdmin():
+    p = psutil.Process().cmdline()
+    return (
+        ctypes.windll.shell32.ShellExecuteW(
             0,
             ctypes.create_unicode_buffer("runas"),
             ctypes.create_unicode_buffer(p[0]),
@@ -89,7 +92,13 @@ if __name__ == "__main__" and not has_admin()[1]:
             0,
             5,
         )
-        if res > 32:
+        > 32
+    )
+
+
+if __name__ == "__main__" and not has_admin()[1]:
+    if "--no-admin" not in sys.argv and "--startup" not in sys.argv:
+        if RestartAsAdmin():
             raise SystemExit
     NoAdmin = True
 
@@ -108,13 +117,34 @@ def GetText(t):
 def SetLang(TargetLang):
     global lang
     lang = TargetLang
-    SetSetting("lang", lang)
+    shared.SetSetting("lang", lang)
     im.delete(1, tkinter.END)
+    nm.delete(0, tkinter.END)
+    if Notify.not_supported:
+        nm.add_command(label=GetText("module can't initialize"), state=tkinter.DISABLED)
+    else:
+        nm.add_checkbutton(
+            label=GetText("Notify in classroom"),
+            variable=NotifyInClassroom,
+            command=lambda: Notify.set_notify_in_classroom(NotifyInClassroom.get())
+        )
+        nm.add_separator()
+        for i in Notify.notify_types:
+            nm.add_radiobutton(
+                label=GetText(Notify[i]), variable=NotifyType, value=i, command=lambda x=i: Notify.set_notify_type(x)
+            )
+    if NoAdmin:
+        im.add_command(label=GetText("Restart as admin"), command=lambda: w.destroy() if RestartAsAdmin() else None)
+    im.add_cascade(label=GetText("Enter Alpha"), menu=eam)
+    im.add_cascade(label=GetText("Leave Alpha"), menu=lam)
+    im.add_cascade(label=GetText("on-stage notify"), menu=nm)
     im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch, command=SwitchAutoPatchAll)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
     )
+    if (pathlib.Path(__file__).parent / "msi_installed.conf").exists():
+        im.add_checkbutton(label=GetText("StartUp"), variable=StartUp, command=lambda: w.after(100, SwitchStartUp))
     im.add_command(label=GetText("Check updates"), command=StartCheckUpdate)
     im.add_command(label=GetText("Exit"), command=w.destroy)
 
@@ -138,32 +168,34 @@ def SetLang(TargetLang):
     ExitB.config(text=GetText("Exit"))
 
     w.title("ClassIn Mover v" + __version__ + (GetText(" - without Admin") if NoAdmin else ""))
+    rw.title(GetText("Remove Watermark"))
+    RWL.config(text=GetText("Input watermark"))
 
 
 @ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def EnumWindowCallback(hwnd, lParam):
-    global ClassInHwnd, ClassInPID, ClassInTitle
+    global ClassInHwnd, ClassInPID, ClassInTitle, run
     TextLen = user32.GetWindowTextLengthW(hwnd)
     text = ctypes.create_unicode_buffer("", TextLen + 20)
     user32.GetWindowTextW(hwnd, text, TextLen + 20)
     Caption = text.value
     if not Caption.startswith("Classroom_"):
-        return 1
+        return 1 if run else 0
     pid = struct.pack("l", (0))
     user32.GetWindowThreadProcessId(hwnd, pid)
     pid = struct.unpack("l", pid)[0]
     ProcessHandle = ctypes.windll.kernel32.OpenProcess(0x0410, 0, pid)
     if ProcessHandle == 0:
-        return 1
+        return 1 if run else 0
     Name_Buffer = ctypes.create_unicode_buffer("", 260)
     ctypes.windll.psapi.GetModuleFileNameExW(ProcessHandle, 0, Name_Buffer, 260)
     ctypes.windll.kernel32.CloseHandle(ProcessHandle)
     if not Name_Buffer.value.lower().endswith("classin.exe"):
-        return 1
+        return 1 if run else 0
     ClassInHwnd.append(hwnd)
     ClassInTitle.append(Caption)
     ClassInPID.append(pid)
-    return 1
+    return 1 if run else 0
 
 
 def GetClassInHwnd():
@@ -175,17 +207,13 @@ def GetClassInHwnd():
     return list(zip(ClassInPID, ClassInHwnd, ClassInTitle))
 
 
+@shared.ShowThread
 def ScanWindow():
     global run, afters
     last = set()
-    count = 0
     while run:
         try:
             st = time.time()
-            if not w.focus_get():
-                I.attributes("-topmost", 1)
-                w.attributes("-topmost", 1)
-            count += 1
             CIHwnd = GetClassInHwnd()
             if len(CIHwnd) != 0:
                 NewValues = []
@@ -199,13 +227,27 @@ def ScanWindow():
                     last = NewSet
                     if not WindowSelector.get() in NewValues:
                         WindowSelector.set(NewValues[0])
+                    if len(NewSet) >= 2 and not Notify.not_supported:
+                        Notify.warn_multi_windows()
             elif len(WindowSelector.get()) != 0:
                 WindowSelector.set("")
                 WindowSelector.config(values=[])
+            if not Notify.not_supported:
+                Notify.detect_and_notify()
         except:
             logging.critical(traceback.format_exc())
-        wait = math.ceil(st) - time.time()
+        wait = math.ceil(st + 0.001) - time.time()
         time.sleep(wait if wait >= 0 else 0)
+
+
+def KeepTopmost():
+    try:
+        if not w.focus_get():
+            I.attributes("-topmost", 1)
+            w.attributes("-topmost", 1)
+    except:
+        pass
+    w.after(500, KeepTopmost)
 
 
 def MouseDownI(event):
@@ -267,22 +309,26 @@ def SwitchController():
         if I.winfo_rootx() + 24 <= w.winfo_screenwidth() // 2:
             place += f"+{I.winfo_rootx() + 56}"
         else:
-            place += f"+{I.winfo_rootx() - 16 - w.winfo_width()}"
+            place += f"+{I.winfo_rootx() - 20 - w.winfo_width()}"
         if I.winfo_rooty() + 24 <= w.winfo_screenheight() // 2:
-            place += f"+{I.winfo_rooty()}"
+            place += f"+{max(0, I.winfo_rooty())}"
         else:
-            place += f"+{I.winfo_rooty() - w.winfo_height()}"
+            place += f"+{max(0, I.winfo_rooty() - w.winfo_height())}"
         w.geometry(place)
         w.deiconify()
         w.after(100, RefreshPost)
         root_shown = True
 
 
+def SwitchStartUp():
+    shared.SetSetting("startup", StartUp.get())
+
+
 def GetWindow():
     s = WindowSelector.get()
     if len(s) == 0:
         return 0
-    return int(s.split(" ", 1)[0])
+    return int(re.findall("^\\d+", s)[0])
 
 
 def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy=None, relative=False):
@@ -292,11 +338,22 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
         return
     if sw is not None:
         user32.ShowWindow(hwnd, sw)
+    logging.debug(
+        {"hwnd": hwnd, "sw": sw, "InsertAfter": InsertAfter, "x": x, "y": y, "cx": cx, "cy": cy, "relative": relative}
+    )
+    rect = struct.pack("llll", *([0] * 4))
+    user32.GetWindowRect(hwnd, rect)
+    rect = struct.unpack("llll", rect)
     if not relative:
+        logging.debug(
+            [
+                rect[0] if x is None else x,
+                rect[1] if y is None else y,
+                max(1, rect[2] - rect[0] if cx is None else cx),
+                max(1, rect[3] - rect[1] if cy is None else cy),
+            ]
+        )
         if InsertAfter is not None:
-            rect = struct.pack("llll", *([0] * 4))
-            user32.GetWindowRect(hwnd, rect)
-            rect = struct.unpack("llll", rect)
             user32.SetWindowPos(
                 hwnd,
                 ctypes.wintypes.HWND(InsertAfter),
@@ -309,9 +366,6 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             I.attributes("-topmost", 1)
             w.attributes("-topmost", 1)
         else:
-            rect = struct.pack("llll", *([0] * 4))
-            user32.GetWindowRect(hwnd, rect)
-            rect = struct.unpack("llll", rect)
             user32.MoveWindow(
                 hwnd,
                 rect[0] if x is None else x,
@@ -321,10 +375,15 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
                 1,
             )
     else:
+        logging.debug(
+            [
+                rect[0] + (0 if x is None else x),
+                rect[1] + (0 if y is None else y),
+                max(1, rect[2] - rect[0] + (0 if cx is None else cx)),
+                max(1, rect[3] - rect[1] + (0 if cy is None else cy)),
+            ]
+        )
         if InsertAfter is not None:
-            rect = struct.pack("llll", *([0] * 4))
-            user32.GetWindowRect(hwnd, rect)
-            rect = struct.unpack("llll", rect)
             user32.SetWindowPos(
                 hwnd,
                 ctypes.wintypes.HWND(InsertAfter),
@@ -337,9 +396,6 @@ def MoveWindow(hwnd=None, sw=None, InsertAfter=None, x=None, y=None, cx=None, cy
             I.attributes("-topmost", 1)
             w.attributes("-topmost", 1)
         else:
-            rect = struct.pack("llll", *([0] * 4))
-            user32.GetWindowRect(hwnd, rect)
-            rect = struct.unpack("llll", rect)
             user32.MoveWindow(
                 hwnd,
                 rect[0] + (0 if x is None else x),
@@ -356,7 +412,7 @@ def SwitchAutoPatchAll():
         for i in afters:
             w.after_cancel(i)
         afters = []
-    SetSetting("autopatchnew", a)
+    shared.SetSetting("autopatchnew", a)
 
 
 def AutoPatch(hwnd=None):
@@ -381,18 +437,19 @@ def AutoPatch(hwnd=None):
 
 def RemoveWatermark():
     if not (pathlib.Path(__file__).parent / "Watermark_Remover.exe").exists():
-        webbrowser.open("https://classin-mover.pages.dev/blogs/evaluate-remove-watermark")
+        if tkinter.messagebox.askyesno(GetText("Error"), GetText("No module")):
+            __version__ = "0.0.0"
+            threading.Thread(target=CheckUpdate, args=(True, True)).start()
         return
-    tkinter.messagebox.showerror(
-        "Evaluate version required",
-        "This function hasn't been released yet. You need to use evaluate version to use it. ",
-    )
+    rw.deiconify()
+    w.after(100, lambda: RWL.config(wraplength=Watermark.winfo_width()))
+    rw.focus_force()
 
 
 def StartCheckUpdate():
     global UpdateThread
     if not UpdateThread.is_alive():
-        UpdateThread = threading.Thread(target=CheckUpdate, args=(True,))
+        UpdateThread = threading.Thread(target=CheckUpdate, args=(True, False))
         UpdateThread.start()
 
 
@@ -472,16 +529,41 @@ def CheckUpdateFromURL(url):
         return
 
 
-def CheckUpdate(ShowEvenLatest=False):
+@shared.ShowThread
+def CheckUpdate(ShowEvenLatest=False, Force=False, func=None, no_blog=False):
     global blogs, lang_data
     NewVersion = None
+
+    U = tkinter.Toplevel(w)
+    U.title(GetText("Checking update"))
+    U.resizable(False, False)
+    U.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
+    style = user32.GetWindowLongW(int(U.frame(), 16), -16)
+    style &= ~0x00020000
+    user32.SetWindowLongW(int(U.frame(), 16), -16, style)
+
+    Checking = tkinter.Label(U, text=GetText("Checking update"))
+    Checking.pack(padx=(100, 100), pady=(100, 100))
+    if Force:
+        U.grab_set()
+        U.protocol("WM_DELETE_WINDOW", w.destroy)
+    else:
+        U.withdraw()
+        U.protocol("WM_DELETE_WINDOW", lambda: None)
     for i in UpdateURL:
         NewVersion = CheckUpdateFromURL(i)
         if NewVersion is not None:
             break
     if NewVersion is None:
         if run:
-            tkinter.messagebox.showwarning(GetText("Warning"), GetText("NO new version"))
+            if Force:
+                tkinter.messagebox.showerror(GetText("Error"), GetText("NO new version"))
+                w.destroy()
+            else:
+                tkinter.messagebox.showwarning(GetText("Warning"), GetText("NO new version"))
+                U.destroy()
+                if callable(func):
+                    func()
         return
     blogs = NewVersion["blogs"]
     if "post" in NewVersion:
@@ -493,15 +575,8 @@ def CheckUpdate(ShowEvenLatest=False):
         WindowSelector.grid_configure(pady=(10, 5))
         w.after(100, RefreshPost)
     if NewVersion["version"] > __version__:
-        U = tkinter.Toplevel(w)
         U.title(GetText("New version detected"))
-        U.resizable(False, False)
-        U.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
-        U.grab_set()
-        U.protocol("WM_DELETE_WINDOW", lambda: None)
-        style = user32.GetWindowLongW(int(U.frame(), 16), -16)
-        style &= ~0x00020000
-        user32.SetWindowLongW(int(U.frame(), 16), -16, style)
+        Checking.destroy()
 
         UpdateInfo = tkinter.Label(
             U,
@@ -524,33 +599,21 @@ def CheckUpdate(ShowEvenLatest=False):
 
         U.focus_force()
     elif ShowEvenLatest:
+        U.destroy()
         tkinter.messagebox.showinfo(GetText("Check update"), GetText("Updated"))
     elif len(blogs) != 0:
         NewBlog = False
-        ViewedBlog = GetSetting("viewedblog", [])
+        ViewedBlog = shared.GetSetting("viewedblog", [])
         for i in blogs:
             if i not in ViewedBlog:
                 NewBlog = True
                 break
-        if NewBlog:
+        if NewBlog and not no_blog:
             OpenBlogs()
-
-
-def GetSetting(attr, default=None, autoset=True):
-    global settings
-    if attr in settings:
-        return settings[attr]
-    else:
-        if autoset:
-            SetSetting(attr, default)
-        return default
-
-
-def SetSetting(attr, value):
-    global settings, SettingsFile
-    settings[attr] = value
-    with open(str(SettingsFile), mode="wt", encoding="utf8") as f:
-        f.write(json.dumps(settings, separators=(",", ":")))
+    if Force:
+        U.destroy()
+    if callable(func):
+        func()
 
 
 def ResetSettings():
@@ -560,6 +623,18 @@ def ResetSettings():
         w.destroy()
 
 
+def SetEnterIconAlpha(a):
+    I.unbind("<Enter>")
+    I.bind("<Enter>", lambda _: I.attributes("-alpha", a))
+    shared.SetSetting("enteralpha", int(a * 100))
+
+
+def SetLeaveIconAlpha(a):
+    I.unbind("<Leave>")
+    I.bind("<Leave>", lambda _: I.attributes("-alpha", a))
+    shared.SetSetting("leavealpha", int(a * 100))
+
+
 def RefreshPost():
     Post.config(text=GetText("post"), wraplength=w.winfo_width() - 40)
     Post.grid(row=0, column=0, columnspan=4, padx=(20, 20), pady=(10, 0), sticky="w")
@@ -567,7 +642,7 @@ def RefreshPost():
 
 def ViewBlog(blog):
     global blogs
-    SetSetting("viewedblog", list(set(GetSetting("viewedblog", [], False) + [blog])))
+    shared.SetSetting("viewedblog", list(set(shared.GetSetting("viewedblog", [], False) + [blog])))
     webbrowser.open(blogs[blog]["url"] + "?version=" + __version__)
 
 
@@ -576,8 +651,20 @@ def OpenBlogs():
     if len(blogs) == 0:
         webbrowser.open("https://classin-mover.pages.dev/blogs?version=" + __version__)
         return
-    _, BT, _ = ShowText(w, text="\n".join(blogs[i]["title"] for i in blogs), title=GetText("Blogs"), model=False, font=("微软雅黑", 14), width=60, height=9, spacing1=8, spacing2=2, background="#fcffff", selectbackground="#add6ff")
-    ViewedBlog = GetSetting("viewedblog", [])
+    _, BT, _ = ShowText(
+        w,
+        text="\n".join(blogs[i]["title"] for i in blogs),
+        title=GetText("Blogs"),
+        model=False,
+        font=("微软雅黑", 14),
+        width=60,
+        height=9,
+        spacing1=8,
+        spacing2=2,
+        background="#fcffff",
+        selectbackground="#add6ff",
+    )
+    ViewedBlog = shared.GetSetting("viewedblog", [])
     for i, blogid in enumerate(blogs):
         tag = "blog%d" % i
         BT.tag_add(tag, "%d.0" % (i + 1), "%d.end" % (i + 1))
@@ -616,6 +703,18 @@ def ShowText(master, text="", title="", showscr=True, model=True, width=80, heig
     return TL, Text, scr
 
 
+def add_text(self: tkinter.Text, text, pos=tkinter.END, scr=None):
+    try:
+        end = scr.get()[-1] == 1.0
+    except:
+        end = False
+    self.config(state=tkinter.NORMAL)
+    self.insert(pos, text)
+    self.config(state=tkinter.DISABLED)
+    if end:
+        self.see(tkinter.END)
+
+
 if __name__ == "__main__":
     if not "--stderr-log" in sys.argv:
         LogFolder = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "log"
@@ -635,19 +734,10 @@ if __name__ == "__main__":
         handlers=(logging.StreamHandler(log),),
     )
 
-    SettingsFile = pathlib.Path.home() / "AppData" / "Local" / "ClassIn-Mover" / "settings.json"
-    if SettingsFile.exists():
-        try:
-            with open(str(SettingsFile), mode="rt", encoding="utf8") as f:
-                settings = json.loads(f.read())
-            if type(settings) != dict:
-                raise TypeError
-        except:
-            settings = {}
-    else:
-        settings = {}
+    if "--startup" in sys.argv and not shared.GetSetting("startup", False):
+        raise SystemExit
 
-    lang = GetSetting("lang", locale.getdefaultlocale()[0].lower().replace("_", "-"))
+    lang = shared.GetSetting("lang", locale.getdefaultlocale()[0].lower().replace("_", "-"))
 
     logging.info("ClassIn Mover version: " + __version__)
     logging.info("Python version: " + sys.version)
@@ -765,43 +855,123 @@ if __name__ == "__main__":
     I.overrideredirect(True)
     I.geometry("48x48+96+96")
     I.resizable(False, False)
-    DoAutoPatch = tkinter.BooleanVar(I, value=GetSetting("autopatchnew", True))
+    DoAutoPatch = tkinter.BooleanVar(I, value=shared.GetSetting("autopatchnew", True))
     im = tkinter.Menu(I, tearoff=False)
     lm = tkinter.Menu(im, tearoff=False)
     for i in lang_data:
         lm.add_command(label=lang_data[i]["LangName"], command=lambda x=i: SetLang(x))
+    EnterAlpha = tkinter.IntVar(I, value=shared.GetSetting("enteralpha", 70))
+    eam = tkinter.Menu(im, tearoff=False)
+    for i in range(30, 101, 5):
+        eam.add_radiobutton(
+            label="%d%%" % i, value=i, variable=EnterAlpha, command=lambda a=i: SetEnterIconAlpha(a / 100)
+        )
+    LeaveAlpha = tkinter.IntVar(I, value=shared.GetSetting("leavealpha", 30))
+    lam = tkinter.Menu(im, tearoff=False)
+    for i in range(30, 101, 5):
+        lam.add_radiobutton(
+            label="%d%%" % i, value=i, variable=LeaveAlpha, command=lambda a=i: SetLeaveIconAlpha(a / 100)
+        )
+    nm = tkinter.Menu(im, tearoff=False)
+    NotifyType = tkinter.IntVar(I, value=shared.GetSetting("on-stage notify", 0))
+    NotifyInClassroom = tkinter.BooleanVar(I, value=shared.GetSetting("notify-in-classroom", False))
+    Notify = onstage_notify.on_stage_notify(NotifyType.get(), NotifyInClassroom.get(), GetText, WindowSelector)
+    if Notify.not_supported:
+        nm.add_command(label=GetText("module can't initialize"), state=tkinter.DISABLED)
+    else:
+        nm.add_checkbutton(
+            label=GetText("Notify in classroom"),
+            variable=NotifyInClassroom,
+            command=lambda: Notify.set_notify_in_classroom(NotifyInClassroom.get()),
+        )
+        nm.add_separator()
+        for i in Notify.notify_types:
+            nm.add_radiobutton(
+                label=GetText(Notify[i]), variable=NotifyType, value=i, command=lambda x=i: Notify.set_notify_type(x)
+            )
+    StartUp = tkinter.BooleanVar(I, value=shared.GetSetting("startup", False))
+
     im.add_cascade(label="Language", menu=lm)
+    if NoAdmin:
+        im.add_command(label=GetText("Restart as admin"), command=lambda: w.destroy() if RestartAsAdmin() else None)
+    im.add_cascade(label=GetText("Enter Alpha"), menu=eam)
+    im.add_cascade(label=GetText("Leave Alpha"), menu=lam)
+    im.add_cascade(label=GetText("on-stage notify"), menu=nm)
     im.add_checkbutton(label=GetText("Auto patch"), variable=DoAutoPatch, command=SwitchAutoPatchAll)
     im.add_command(
         label=GetText("Patch all"),
         command=lambda: list(AutoPatch(int(i.split(" ", 1)[0])) for i in WindowSelector.cget("values")),
     )
+    if (pathlib.Path(__file__).parent / "msi_installed.conf").exists():
+        im.add_checkbutton(label=GetText("StartUp"), variable=StartUp, command=lambda: w.after(100, SwitchStartUp))
     im.add_command(label=GetText("Check updates"), command=StartCheckUpdate)
     im.add_command(label=GetText("Exit"), command=w.destroy)
 
-    img = pickle.loads(zlib.decompress(base64.b85decode(icon)))
+    img = pickle.loads(lzma.decompress(base64.b85decode(icon)))
     imgTk = PIL.ImageTk.PhotoImage(img)
     il = tkinter.Label(I, bd=0, image=imgTk)
     il.place(x=0, y=0)
     I.protocol("WM_DELETE_WINDOW", lambda: 0)
     I.attributes("-topmost", 1)
-    I.attributes("-alpha", 0.7)
+    I.attributes("-alpha", shared.GetSetting("enteralpha", 70) / 100)
     I.attributes("-transparentcolor", "#ff0000")
-    I.bind("<Enter>", lambda _: I.attributes("-alpha", 0.7))
-    I.bind("<Leave>", lambda _: I.attributes("-alpha", 0.3))
+    I.bind("<Enter>", lambda _: I.attributes("-alpha", shared.GetSetting("enteralpha", 70) / 100))
+    I.bind("<Leave>", lambda _: I.attributes("-alpha", shared.GetSetting("leavealpha", 30) / 100))
     I.bind("<ButtonPress-1>", MouseDownI)
     I.bind("<B1-Motion>", MouseMoveI)
     I.bind("<ButtonRelease-1>", MouseUpI)
     I.bind("<Button-3>", lambda e: im.tk_popup(e.x_root, e.y_root))
 
+    rw = tkinter.Toplevel(w)
+    rw.title(GetText("Remove Watermark"))
+    rw.resizable(False, False)
+    rw.iconbitmap(str(pathlib.Path(__file__).parent / "ClassIn_Mover.ico"))
+    rw.attributes("-topmost", 1)
+    rw.protocol("WM_DELETE_WINDOW", rw.withdraw)
+    style = user32.GetWindowLongW(int(rw.frame(), 16), -16)
+    style &= ~0x00020000
+    user32.SetWindowLongW(int(rw.frame(), 16), -16, style)
+    RWL = tkinter.ttk.Label(rw, text=GetText("Input watermark"))
+    RWL.pack(anchor="w", padx=(20, 20), pady=(20, 5))
+    Watermark = tkinter.ttk.Combobox(rw, width=40, values=shared.GetSetting("watermarks", []), font=("微软雅黑", 10))
+    Watermark.pack(anchor="w", padx=(20, 20), pady=(5, 5))
+    w.after(100, lambda: RWL.config(wraplength=Watermark.winfo_width()))
+    TryRemoveB = tkinter.ttk.Button(rw, text=GetText("Try remove"))
+    TryRemoveB.pack(pady=(5, 5))
+    RWF = tkinter.ttk.Frame(rw)
+    RWT = tkinter.Text(RWF, width=40, height=8, font=("微软雅黑", 10), wrap="word")
+    RWscr = tkinter.ttk.Scrollbar(RWF, orient=tkinter.VERTICAL)
+    RWscr.config(command=RWT.yview)
+    RWT.config(yscrollcommand=RWscr.set)
+    RWT.pack(fill=tkinter.Y, side=tkinter.LEFT)
+    RWscr.pack(fill=tkinter.Y, side=tkinter.RIGHT)
+    RWF.pack(padx=(20, 20), pady=(5, 20))
+    rw.withdraw()
+
+    try:
+        from Remove_Watermark import WatermarkRemover
+    except:
+        StartRemove = lambda: add_text(RWT, "Remove watermark module not found\n", scr=RWscr)
+    else:
+        StartRemove = WatermarkRemover(Watermark, RWT, GetText, RWscr, WindowSelector).StartRemove
+
+    TryRemoveB.config(command=StartRemove)
+    Watermark.bind("<Return>", lambda _: StartRemove())
+
     ScanThread = threading.Thread(target=ScanWindow)
     ScanThread.start()
 
-    UpdateThread = threading.Thread(target=CheckUpdate)
+    UpdateThread = threading.Thread(target=CheckUpdate, kwargs={"no_blog": True} if "--startup" in sys.argv else {})
     UpdateThread.start()
 
-    w.mainloop()
+    w.after(500, KeepTopmost)
+
+    try:
+        w.mainloop()
+    except KeyboardInterrupt:
+        pass
+    logging.debug("Main window destroyed")
     run = False
     if reset:
-        os.remove(str(SettingsFile))
+        os.remove(str(shared.SettingsFile))
     sys.exit(0)

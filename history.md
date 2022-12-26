@@ -129,3 +129,21 @@
 - See latest blog list
 
 - Arguments for debugging
+
+## 2.2.0 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.2.0/total)
+
+> Date: 2022/12/26
+
+- Remove classroom watermark
+
+- On-stage notification (available choices: Message box, Switching to current window, Closing classroom window, Closing ClassIn) (Maybe unavailable on some systems due to system settings, still under investigation)
+
+- Auto start with logging on
+
+- Manually restart as administrator
+
+- Set floating icon transparency
+
+- Optimize keep topmost waiting mechanism
+
+- Increase log level
