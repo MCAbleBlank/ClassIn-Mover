@@ -147,3 +147,5 @@
 - Optimize keep topmost waiting mechanism
 
 - Increase log level
+
+- Use `msi` as installer
