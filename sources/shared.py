@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import ctypes
 import json
 import logging
 import pathlib
@@ -65,3 +66,13 @@ def GetSetting(attr, default=None, autoset=True):
         if autoset:
             SetSetting(attr, default)
         return default
+
+
+def SwitchWindow(hwnd):
+    dwForeID = ctypes.windll.user32.GetWindowThreadProcessId(ctypes.windll.user32.GetForegroundWindow(), 0)
+    dwCurID = ctypes.windll.kernel32.GetCurrentThreadId()
+    ctypes.windll.user32.AttachThreadInput(dwCurID, dwForeID, 1)
+    ctypes.windll.user32.ShowWindow(hwnd, 5)
+    ctypes.windll.user32.SetWindowPos(hwnd, 0, 0, 0, 0, 0, 7)
+    ctypes.windll.user32.SetForegroundWindow(hwnd)
+    ctypes.windll.user32.AttachThreadInput(dwCurID, dwForeID, 0)

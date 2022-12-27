@@ -138,7 +138,7 @@ class on_stage_notify:
         if len(s) == 0:
             return
         logging.info("Switching to %d" % int(re.findall("^\\d+", s)[0]))
-        ctypes.windll.user32.SetForegroundWindow(int(re.findall("^\\d+", s)[0]))
+        shared.SwitchWindow(int(re.findall("^\\d+", s)[0]))
 
     def _close_window(self):
         s = self.WindowSelector.get()

@@ -786,7 +786,7 @@ if __name__ == "__main__":
     SwitchB = tkinter.ttk.Button(
         w,
         text=GetText("Switch To"),
-        command=lambda: (user32.SetForegroundWindow(GetWindow()) if GetWindow() else None),
+        command=lambda: (shared.SwitchWindow(GetWindow()) if GetWindow() else None),
     )
     AutoB = tkinter.ttk.Button(w, text=GetText("Auto Patch"), command=AutoPatch)
     WatermarkB = tkinter.ttk.Button(w, text=GetText("Remove Watermark"), command=RemoveWatermark)
