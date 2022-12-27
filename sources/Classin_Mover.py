@@ -576,6 +576,7 @@ def CheckUpdate(ShowEvenLatest=False, Force=False, func=None, no_blog=False):
         w.after(100, RefreshPost)
     if NewVersion["version"] > __version__:
         U.title(GetText("New version detected"))
+        U.deiconify()
         Checking.destroy()
 
         UpdateInfo = tkinter.Label(
