@@ -40,7 +40,7 @@ class on_stage_notify:
             self.not_supported = True
         else:
             self.not_supported = False
-        logging.debug(self.not_supported)
+        logging.debug({"on-stage notify supported": not self.not_supported})
         self.cam_used = False
         self.mic_used = False
         self.multi_window_warned = False
@@ -55,7 +55,7 @@ class on_stage_notify:
     def set_notify_type(self, notify_type):
         self.notify_type = notify_type
         shared.SetSetting("on-stage notify", notify_type)
-    
+
     def set_notify_in_classroom(self, notify_in_classroom):
         self.notify_in_classroom = notify_in_classroom
         shared.SetSetting("notify-in-classroom", notify_in_classroom)
@@ -73,9 +73,10 @@ class on_stage_notify:
         for i in mic:
             if i.lower().endswith("classin.exe"):
                 mic_using = mic[i]
-        if (cam_using and not self.cam_used) or (mic_using and not self.mic_used):
-            self.cam_used = cam_using is not None
-            self.mic_used = mic_using is not None
+        notify = (cam_using and not self.cam_used) or (mic_using and not self.mic_used)
+        self.cam_used = cam_using is not None
+        self.mic_used = mic_using is not None
+        if notify:
             if not self.notify_in_classroom:
                 hwnd = ctypes.windll.user32.GetForegroundWindow()
                 pid = struct.pack("l", (0))
@@ -89,9 +90,13 @@ class on_stage_notify:
                     if Name_Buffer.value.lower().endswith("classin.exe"):
                         return
             if self.notify_type == 1:
-                threading.Thread(target=self._notify_msgbox, args=(cam_using is not None, mic_using is not None)).start()
+                threading.Thread(
+                    target=self._notify_msgbox, args=(cam_using is not None, mic_using is not None)
+                ).start()
             elif self.notify_type == 2:
-                threading.Thread(target=self._notify_msgbox, args=(cam_using is not None, mic_using is not None, True)).start()
+                threading.Thread(
+                    target=self._notify_msgbox, args=(cam_using is not None, mic_using is not None, True)
+                ).start()
             elif self.notify_type == 3:
                 self._switch_to()
             elif self.notify_type == 4:
@@ -132,6 +137,7 @@ class on_stage_notify:
         s = self.WindowSelector.get()
         if len(s) == 0:
             return
+        logging.info("Switching to %d" % int(re.findall("^\\d+", s)[0]))
         ctypes.windll.user32.SetForegroundWindow(int(re.findall("^\\d+", s)[0]))
 
     def _close_window(self):
@@ -139,7 +145,7 @@ class on_stage_notify:
         if len(s) == 0:
             return
         ctypes.windll.user32.SendMessageW(int(re.findall("^\\d+", s)[0]), 0x10, 0, 0)
-    
+
     def _stop_process(self):
         s = self.WindowSelector.get()
         if len(s) == 0:

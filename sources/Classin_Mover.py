@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>."""
 
-__version__ = "2.2.0"
+__version__ = "2.2.0.1"
 
 import base64
 import ctypes
@@ -126,7 +126,7 @@ def SetLang(TargetLang):
         nm.add_checkbutton(
             label=GetText("Notify in classroom"),
             variable=NotifyInClassroom,
-            command=lambda: Notify.set_notify_in_classroom(NotifyInClassroom.get())
+            command=lambda: w.after(100, Notify.set_notify_in_classroom(NotifyInClassroom.get())),
         )
         nm.add_separator()
         for i in Notify.notify_types:
@@ -549,7 +549,7 @@ def CheckUpdate(ShowEvenLatest=False, Force=False, func=None, no_blog=False):
         U.protocol("WM_DELETE_WINDOW", w.destroy)
     else:
         U.withdraw()
-        U.protocol("WM_DELETE_WINDOW", lambda: None)
+        U.protocol("WM_DELETE_WINDOW", w.destroy)
     for i in UpdateURL:
         NewVersion = CheckUpdateFromURL(i)
         if NewVersion is not None:
@@ -911,7 +911,7 @@ if __name__ == "__main__":
     imgTk = PIL.ImageTk.PhotoImage(img)
     il = tkinter.Label(I, bd=0, image=imgTk)
     il.place(x=0, y=0)
-    I.protocol("WM_DELETE_WINDOW", lambda: 0)
+    I.protocol("WM_DELETE_WINDOW", lambda: None)
     I.attributes("-topmost", 1)
     I.attributes("-alpha", shared.GetSetting("enteralpha", 70) / 100)
     I.attributes("-transparentcolor", "#ff0000")

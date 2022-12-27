@@ -149,3 +149,9 @@
 - Increase log level
 
 - Use `msi` as installer
+
+## 2.2.0.1 ![Downloads](https://img.shields.io/github/downloads/CarlGao4/ClassIn-Mover/v2.2.0.1/total)
+
+> Date: 2022/12/26
+
+- Fix bug: May not be notified on some systems
