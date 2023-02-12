@@ -4,44 +4,32 @@
 
 [Download latest version](https://classin-mover.pages.dev/)
 
-A program to move `ClassIn` classroom window in order to exit from focused learning mode.
+ClassIn-Mover is a program designed to move the ClassIn classroom window and exit from the focused learning mode. The program supports ClassIn versions 3.0.2.130 to 3.0.5.1, as well as 3.0.7.x and 4.x. Please note that ClassIn versions prior to 3.0.2.130 do not have the focused learning mode feature.
 
-Supported `ClassIn` version: `3.0.2.130` to `3.0.5.1`, as well as `3.0.7.x` `4.x`. (`ClassIn` prior to `3.0.2.130` does not have focused learning mode at all)
+The program is available in both English and Simplified Chinese. You can download the latest version from [here](https://classin-mover.pages.dev/).
 
-Maybe the program will lose efficacy in the future versions.
-
-## Components
+## Features
+ClassIn-Mover is available in two variants: Classic and Enhanced.
 
 ### Classic
-
-The program remained the old style of v1.0.0, except the modern UI by Tk. 
-
-#### Usage
-
-Run this program before entering the classroom, then get into the classroom as normal.
-
-After that, the program will automatically detect the classroom window, and make it unable to occupy the whole screen.
-
-If working well, the program should output one line of log each second, showing the current working status.
+This version retains the traditional style of v1.0.0, but with a modern UI powered by Tk. To use the program, simply run it before entering the ClassIn classroom and then enter the classroom as normal. The program will automatically detect the ClassIn window and prevent it from occupying the entire screen. If the program is working correctly, it will output a log line once a second indicating the current status.
 
 ### Enhanced
+This version of ClassIn-Mover starts in a minimized state, with only a transparent icon visible. You can click the icon to open the main window, which allows you to move, resize, and set the z-order or topmost priority of the selected ClassIn window. Auto patching is enabled by default, which automatically resizes the ClassIn window to a normal size once it has been detected. You can disable this feature by right-clicking the minimized icon. The "Auto Patch" button in the main window will not enable this feature, but instead simply patch the selected window.
 
-The program will be started on the minimized status, which only a transparent icon is displayed. You can click it to open the main window, which can move, resize, and set z-order (or topmost) of your selected ClassIn window. 
+## Running the Code
+ClassIn-Mover is written in Python, so you can run the code yourself if you have coding experience. The program requires the Pillow and psutil packages, which can be installed using pip or conda. Once these packages are installed, you can run the program using a Python interpreter.
 
-Auto patch is enabled as default, which will automatically resize the window into normal state like other applications once a new ClassIn window has been detected. You can disable this feature by right-clicking the minimized icon. The button `Auto Patch` on the main window will not enable this feature, but just patch the selected window.
+Please note that it is not recommended to run or modify the code if you do not have coding experience. Instead, it is recommended to use the released versions of ClassIn-Mover.
 
-## Running the codes
-
-As you may have noticed, the latest version uses Python, which means you can run the codes yourself. The dependencies are `Pillow` and `psutil`. After you have installed these two packages using `pip` or `conda`, you can directly run the program with a Python interpreter. 
-
-**However, it is not recommended to run or modify the codes if you don't have coding experience. Use the releases instead.**
-
-## Known issues
-
-- **This program calls native API and thus can only work on Windows.**
+## Limitations
+ClassIn-Mover relies on native API calls and is only compatible with Windows.
 
 ## Donate
+Thank you for your interest in supporting this project! Your donation will help us continue to improve and maintain this program.
 
 ![WeChat](img/wechat.png)
 
 ![AliPay](img/alipay.jpg)
+
+Thank you for your support!

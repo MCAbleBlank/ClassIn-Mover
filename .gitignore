@@ -6,3 +6,4 @@ __pycache__
 *.exe
 Remove_Watermark.py
 msi_installed.conf
+.vscode
