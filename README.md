@@ -1,5 +1,7 @@
 # [![ClassIn-Mover icon 32x32](ClassIn_Mover_32.png) ClassIn-Mover ![GitHub all releases](https://img.shields.io/github/downloads/CarlGao4/Classin-mover/total)](https://classin-mover.pages.dev/)
 
+注意：原作者因为一些原因已经删库，这里是备份
+
 [简体中文](https://classin-mover.pages.dev/zh-cn)
 
 [Download latest version](https://classin-mover.pages.dev/)
@@ -27,9 +29,5 @@ ClassIn-Mover relies on native API calls and is only compatible with Windows.
 
 ## Donate
 Thank you for your interest in supporting this project! Your donation will help us continue to improve and maintain this program.
-
-![WeChat](img/wechat.png)
-
-![AliPay](img/alipay.jpg)
 
 Thank you for your support!
